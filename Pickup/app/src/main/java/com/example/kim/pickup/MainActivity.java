@@ -1,5 +1,6 @@
 package com.example.kim.pickup;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +23,7 @@ public class MainActivity extends ActionBarActivity {
     private EditText _passwordEditText;
     private String _errorString = "";
 
+    static final int CREATE_ACCOUNT_REQUEST = 1; //The request code
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
@@ -61,6 +63,9 @@ public class MainActivity extends ActionBarActivity {
         //create a new intent(a sign in page)
         /* TODO */
 
+        Intent create_account_intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(create_account_intent);
+        //startActivityForResult(create_account_intent, CREATE_ACCOUNT_REQUEST);
     }
 
     @Override
