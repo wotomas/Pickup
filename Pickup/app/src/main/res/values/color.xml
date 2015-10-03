@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="login_background">#363951</color>
+    <color name="login_button">#b1bc39</color>
+    <color name="login_button_pressed">#8d962d</color>
+
+    <color name="login_font_color">#D7D7D7</color>
+
+    <color name="login_editText_color">#79C6BECD</color>
+
+</resources>
