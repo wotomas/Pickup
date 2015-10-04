@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="@color/login_background">
+    android:layout_height="match_parent" android:background="@color/login_background"
+    android:gravity="center">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_margin="10dp">
 
         <ImageView
             android:layout_width="198dp"
@@ -18,113 +20,141 @@
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content">
 
             <EditText
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
                 android:ems="10"
-                android:id="@+id/create_email"
-                android:hint="Email"
-                android:background="@drawable/custom_edittext"
+                android:id="@+id/create_username"
+                android:hint="Username"
                 android:textAlignment="center"
                 android:textColor="@color/login_font_color"
                 android:textColorHint="@color/login_font_color"
+                style="@style/EditTextCustomHolo"
                 android:layout_marginBottom="10dp"
                 android:padding="5dp"
-                />
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/create_password"
-                android:hint="Password"
-                android:background="@drawable/custom_edittext"
-                android:textAlignment="center"
-                android:textColor="@color/login_font_color"
-                android:textColorHint="@color/login_font_color"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/create_passwordAgain"
-                android:hint="Verify Email"
-                android:background="@drawable/custom_edittext"
-                android:textAlignment="center"
-                android:textColor="@color/login_font_color"
-                android:textColorHint="@color/login_font_color"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/create_password"
+                    android:hint="Password"
+                    android:textAlignment="center"
+                    android:textColor="@color/login_font_color"
+                    android:textColorHint="@color/login_font_color"
+                    style="@style/EditTextCustomHolo"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:hint="Name"
-                android:ems="10"
-                android:id="@+id/create_name"
-                android:background="@drawable/custom_edittext"
-                android:textAlignment="center"
-                android:textColor="@color/login_font_color"
-                android:textColorHint="@color/login_font_color"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/create_passwordAgain"
+                    android:layout_weight="1"
+                    android:hint="Verify Password"
+                    android:textAlignment="center"
+                    android:textColor="@color/login_font_color"
+                    android:textColorHint="@color/login_font_color"
+                    style="@style/EditTextCustomHolo"
+                    android:layout_marginBottom="10dp"
+                    android:padding="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+            </LinearLayout>
 
-            <EditText
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/create_gender"
-                android:hint="Gender"
-                android:background="@drawable/custom_edittext"
-                android:textAlignment="center"
-                android:textColor="@color/login_font_color"
-                android:textColorHint="@color/login_font_color"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="phone"
-                android:ems="10"
-                android:id="@+id/create_phoneNo"
-                android:hint="Phone Number"
-                android:background="@drawable/custom_edittext"
-                android:textAlignment="center"
-                android:textColor="@color/login_font_color"
-                android:textColorHint="@color/login_font_color"
-                android:layout_marginBottom="10dp"
-                android:padding="5dp" />
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/create_phoneNo"
+                    android:hint="Phone Number"
+                    android:textAlignment="center"
+                    android:textColor="@color/login_font_color"
+                    android:textColorHint="@color/login_font_color"
+                    style="@style/EditTextCustomHolo"
+                    android:layout_marginBottom="10dp"
+                    android:layout_weight="1"
+                    android:padding="5dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:gravity="center">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Male"
+                        android:id="@+id/gender_male"
+                        android:onClick="onRadioButtonClicked"
+                        android:checked="false"
+                        android:textColor="@color/login_font_color"
+                        android:textSize="15dp" />
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Female"
+                        android:id="@+id/gender_female"
+                        android:onClick="onRadioButtonClicked"
+                        android:textColor="@color/login_font_color"
+                        android:textSize="15dp" />
+                </RadioGroup>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:textAlignment="center">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="37dp"
-                    android:text="Create"
-                    android:id="@+id/create_button"
-                    android:textColor="#ffffffff"
-                    android:background="@drawable/custom_button"
-                    android:layout_weight="1"/>
+                android:textAlignment="center"
+                android:layout_marginTop="35dp">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="Create"
+                    android:id="@+id/create_button"
+                    android:textColor="@color/login_font_color"
+                    android:background="@drawable/custom_button"
+                    android:layout_weight="1"
+                    android:textAlignment="center" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="60dp"
                     android:text="Cancel"
                     android:layout_weight="1"
+                    android:textColor="@color/login_background"
+
                     android:id="@+id/cancel_button" />
             </LinearLayout>
         </LinearLayout>

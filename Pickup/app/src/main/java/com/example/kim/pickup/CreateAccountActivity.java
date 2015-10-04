@@ -2,9 +2,12 @@ package com.example.kim.pickup;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
+import android.widget.RadioButton;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
@@ -12,7 +15,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
-        getSupportActionBar().hide();
 
         setContentView(R.layout.activity_create_account);
     }
@@ -37,5 +39,22 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.gender_male:
+                if (checked)
+                    Log.d("test", "male was checked");
+                    break;
+            case R.id.gender_female:
+                if (checked)
+                    Log.d("test", "female was checked");
+                    break;
+        }
     }
 }
