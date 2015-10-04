@@ -49,12 +49,14 @@ public class CreateAccountActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.gender_male:
                 if (checked)
-                    Log.d("test", "male was checked");
                     break;
             case R.id.gender_female:
                 if (checked)
-                    Log.d("test", "female was checked");
                     break;
         }
+    }
+
+    public void returnToMain(View view){
+        finish();
     }
 }

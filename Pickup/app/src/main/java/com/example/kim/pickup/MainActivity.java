@@ -11,6 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -47,9 +48,15 @@ public class MainActivity extends ActionBarActivity {
         //    Return true or false. if true, set _errorString to according error string
 
         /* TODO */
-
-
-        //if method returned false(No error), continue and send query to server to login.
+        boolean validLoginFlag = validLogin();
+        if(validLoginFlag==true) {
+            //continue and send query to the server to login
+            Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show();
+        }else
+        {
+            //toast the error message
+            Toast.makeText(this, _errorString, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onForgotClick(View view) {
@@ -61,7 +68,6 @@ public class MainActivity extends ActionBarActivity {
         Log.d("Create Account", "Create Account Button Pressed");
         //create button is pressed
         //create a new intent(a sign in page)
-        /* TODO */
 
         Intent create_account_intent = new Intent(this, CreateAccountActivity.class);
         startActivity(create_account_intent);
@@ -88,5 +94,41 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private boolean validLogin(){
+        //check parameters and see if it is validate
+        //ex) create a method that validates username and password. check for null, stringify, empty password, etc.
+        //    Return true or false. if true, set _errorString to according error string
+
+        _userNameEditText = (EditText) findViewById(R.id.username_edittext);
+        _passwordEditText = (EditText) findViewById(R.id.password_edittext);
+        String username = _userNameEditText.getText().toString();
+        String password = _passwordEditText.getText().toString();
+        _errorString = ""; //reset error string
+
+        //check null
+        if (username.matches("")) {
+            _errorString = "Username is required";
+        }
+        if (password.matches("")) {
+            _errorString = "Password is required";
+        }
+        if(!username.matches("^[a-z0-9]*$")) {
+            _errorString = "Invalid username format";
+        }
+        if((password.length()<4 || password.length()>16)){
+            Log.d("length check", "length: "+password.length());
+            _errorString = "Invalid password length";
+        }
+
+
+        if(_errorString=="")
+            return true;   //valid login details
+        else
+        {
+            return false; //invalie login details
+        }
+
     }
 }
