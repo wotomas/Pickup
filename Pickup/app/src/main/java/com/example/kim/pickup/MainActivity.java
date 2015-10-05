@@ -36,6 +36,8 @@ public class MainActivity extends ActionBarActivity {
 
         setContentView(R.layout.activity_main);
 
+        //attach TextWatch
+
 
     }
 
@@ -121,7 +123,6 @@ public class MainActivity extends ActionBarActivity {
             Log.d("length check", "length: "+password.length());
             _errorString = "Invalid password length";
         }
-
 
         if(_errorString=="")
             return true;   //valid login details

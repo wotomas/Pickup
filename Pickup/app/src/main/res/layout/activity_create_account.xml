@@ -52,14 +52,10 @@
                     android:id="@+id/create_password"
                     android:hint="Password"
                     android:textAlignment="center"
-                    android:textColor="@color/login_font_color"
-                    android:textColorHint="@color/login_font_color"
-                    style="@style/EditTextCustomHolo"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
-                    android:padding="5dp"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
+                    android:textColor="@color/login_font_color" android:textColorHint="@color/login_font_color" style="@style/EditTextCustomHolo"
+                    android:layout_marginBottom="10dp" android:layout_weight="1"
+                    android:padding="5dp" android:paddingLeft="5dp" android:paddingRight="5dp"
+                    android:maxLength="16"/>
 
                 <EditText
                     android:layout_width="wrap_content"
@@ -77,7 +73,32 @@
                     android:padding="5dp"
                     android:paddingLeft="5dp"
                     android:paddingRight="5dp" />
+
             </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/passwordLengthError"
+                    android:textColor="#ff0000" android:textStyle="italic"
+                    android:id="@+id/tv_password_length_error"
+                    android:layout_marginLeft="5dp"
+                    android:visibility="invisible" android:layout_alignParentLeft="true"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Password match FAIL" android:layout_alignParentRight="true"
+                    android:textColor="#ff0000" android:textStyle="italic"
+                    android:id="@+id/tv_password_mismatch" android:visibility="invisible"/>
+            </RelativeLayout>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -143,10 +164,9 @@
                     android:layout_height="wrap_content"
                     android:text="Create"
                     android:id="@+id/create_button"
-                    android:textColor="@color/login_font_color"
-                    android:background="@drawable/custom_button"
-                    android:layout_weight="1"
-                    android:textAlignment="center" />
+                    android:textColor="@color/login_font_color" android:background="@drawable/custom_button"
+                    android:layout_weight="1" android:textAlignment="center"
+                    android:onClick="btnCreate"/>
 
                 <Button
                     android:layout_width="wrap_content"
