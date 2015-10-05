@@ -83,16 +83,15 @@ public class CreateAccountActivity extends AppCompatActivity {
                     // code to execute when EditText loses focus
                     TextView errorText = (TextView) findViewById(R.id.tv_password_mismatch);
 
-                    if (_passwordAgain.getText().toString().equals(_passwordEditText.getText().toString())){
+                    if (_passwordAgain.getText().toString().equals(_passwordEditText.getText().toString())) {
                         errorText.setTextColor(Color.GREEN);
                         errorText.setText("Password Match SUCCESS");
                         errorText.setVisibility(View.VISIBLE);
-                    }
-                    else{
+                    } else {
                         errorText.setTextColor(Color.RED);
                         errorText.setText("Password Match FAIL");
                         errorText.setVisibility(View.VISIBLE);
-                     }
+                    }
                 }
             }
         });
@@ -135,20 +134,29 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
-
+    //true = valid, so proceed. false = invalid, don't further proceed
     private boolean validCreation() {
         _passwordEditText = (EditText) findViewById(R.id.create_password);
         _passwordAgain = (EditText) findViewById(R.id.create_passwordAgain);
         _username = (EditText) findViewById(R.id.create_username);
         _phoneNo = (EditText) findViewById(R.id.create_phoneNo);
-        //_gender = (RadioGroup) findViewById();
+        _gender = (RadioGroup) findViewById(R.id.gender);
 
-        /*8if(_passwordEditText.getText().toString() != _passwordAgain.getText().toString())
-        {
+        boolean validFlag = true;
 
-            return false;
-        }*/
-        return true;
+        //username invalid form validation
+        if ( (!_username.getText().toString().matches("^[a-z0-9]*$"))) {
+            _errorString = "Invalid username format";
+            validFlag = false;
+        }
+        //not empty validation
+        if(_phoneNo.getText().toString().matches("") || _passwordEditText.getText().toString().matches("")
+                || _username.getText().toString().matches("") || (_gender.getCheckedRadioButtonId() == -1)){
+            _errorString = "Creation Form NOT FULLY FILLED";
+            validFlag = false;
+        }
+
+        return validFlag;
     }
 
     public void btnCreate(View view) {
@@ -157,14 +165,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             //TODO for Jimmy
             //Add new user data to database, at this stage
 
-
             Toast.makeText(this, "Account was successfully created!", Toast.LENGTH_SHORT).show();
             finish();
         }else
         {
             Toast.makeText(this, _errorString, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public void returnToMain(View view){

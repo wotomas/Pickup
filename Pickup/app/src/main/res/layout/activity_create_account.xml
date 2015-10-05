@@ -127,7 +127,7 @@
                     android:layout_height="match_parent"
                     android:orientation="horizontal" android:layout_weight="1"
                     android:layout_gravity="center"
-                    android:gravity="center">
+                    android:gravity="center" android:id="@+id/gender">
 
                     <RadioButton
                         android:layout_width="wrap_content"
