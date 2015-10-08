@@ -8,6 +8,7 @@
         <item name="android:background">@drawable/registerpage_edit_text_holo_light</item>
         <item name="android:textColor">@color/login_font_color</item>
     </style>
+
     <!--
     <style name="EditRadioButtonCustomHolo" parent="android:Widget.EditText">
         <item name="android:background">@drawable/registerpage_btn_radio_holo_light</item>
