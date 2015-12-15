@@ -157,25 +157,29 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:textAlignment="center"
-                android:layout_marginTop="35dp">
+                android:layout_marginTop="35dp"
+                android:gravity="center">
 
                 <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="190dp"
                     android:layout_height="wrap_content"
                     android:text="Create"
                     android:id="@+id/create_button"
-                    android:textColor="@color/login_font_color" android:background="@drawable/custom_button"
-                    android:layout_weight="1" android:textAlignment="center"
+                    android:textColor="@color/login_font_color"
+                    android:textSize="18sp"
+                    android:background="@drawable/pink_button"
+                    android:textAlignment="center"
                     android:onClick="btnCreate"/>
-
-                <Button
+                <!--android:background="@drawable/custom_button" -->
+                <!--<Button
                     android:layout_width="wrap_content"
                     android:layout_height="60dp"
                     android:text="Cancel"
                     android:layout_weight="1"
                     android:textColor="@color/login_background"
+                    android:background="@drawable/pink_button"
                     android:onClick="returnToMain"
-                    android:id="@+id/cancel_button" />
+                    android:id="@+id/cancel_button" /> -->
             </LinearLayout>
         </LinearLayout>
 

@@ -4,8 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -41,6 +44,11 @@ public class CreateMatchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Create New Match");
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
+
         setContentView(R.layout.activity_create_match);
         matchObject = new Match();
         matchTitleEditText = (EditText) findViewById(R.id.matchTitleEditText);

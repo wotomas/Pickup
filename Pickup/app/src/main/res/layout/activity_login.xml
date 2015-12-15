@@ -82,11 +82,11 @@
             android:id="@+id/login_button"
             android:layout_marginTop="20dp"
             android:textColor="#ffffffff"
-            android:background="@drawable/custom_button"
+            android:background="@drawable/pink_button"
             android:textSize="@dimen/login_font_smaller_size"
             android:onClick="onLoginButton" />
     </LinearLayout>
-
+    <!--android:background="@drawable/custom_button"-->
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
