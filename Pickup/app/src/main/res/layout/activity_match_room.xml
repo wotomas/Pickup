@@ -8,14 +8,41 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="256dp"
-        android:id="@+id/location_image">
+        android:id="@+id/location_image"
+        android:layout_marginTop="0dp">
 
         <ImageView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView4" android:src="@drawable/basketball_court"
             android:maxWidth="50dp"
-            android:maxHeight="50dp" />
+            android:maxHeight="50dp"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:alpha="0.6"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Basket Ball"
+                android:id="@+id/sportsType"
+                android:textColor="#000000" android:textStyle="bold"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LG1 S H Ho Sports Hall"
+                android:id="@+id/matchLocation"
+                android:textColor="#000000" android:textStyle="bold"
+                android:textSize="20dp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <LinearLayout
@@ -57,11 +84,19 @@
                     android:layout_marginLeft="5dp" />
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/player_detail_arrow"
-                android:src="@drawable/left_arrow"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/player_detail_arrow"
+                    android:src="@drawable/left_arrow"
+                    android:layout_gravity="center" />
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -97,21 +132,37 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/image_detail_arrow"
-                android:src="@drawable/left_arrow"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/image_detail_arrow"
+                    android:src="@drawable/left_arrow"
+                    android:layout_gravity="center" />
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Join Game"
-        android:id="@+id/join_game_button"
-        android:layout_gravity="center" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Join Game"
+            android:id="@+id/join_game_button"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp" />
+    </LinearLayout>
 
 </LinearLayout>
