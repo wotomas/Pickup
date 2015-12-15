@@ -41,7 +41,7 @@ public class LoginActivity extends ActionBarActivity {
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         super.onCreate(savedInstanceState);
 
-        //getSupportActionBar().hide();
+        getSupportActionBar().hide();
 
         _userNameEditText = (EditText) findViewById(R.id.username_edittext);
         _passwordEditText = (EditText) findViewById(R.id.password_edittext);
