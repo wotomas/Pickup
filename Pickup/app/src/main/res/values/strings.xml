@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Pickup</string>
     <string name="action_logout">Logout</string>
     <string name="title_activity_create_account">Create New Account</string>
@@ -13,7 +12,25 @@
     <string name="title_activity_sport_selection">Select Sports</string>
     <string name="title_activity_room_selection">RoomSelectionActivity</string>
     <string name="action_addMatch">Create Match</string>
+    <string name="desc_list_item_icon">List Item Icon</string>
+    <!-- Navigation Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item>Profile</item>
+        <item>Explore</item>
+        <item>Messages</item>
+        <item>Friends</item>
+    </string-array>
 
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/listprofiledrawable</item>
+        <item>@drawable/listexploredrawable</item>
+        <item>@drawable/listmessagedrawable</item>
+        <item>@drawable/listfriendsdrawable</item>
+    </array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="hello_world">Hello world!</string>
 
     <string name="icon_heart">&#xf004;</string>

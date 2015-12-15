@@ -1,21 +1,30 @@
 package com.example.kim.pickup.activity;
 
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.view.View;
+import android.widget.ListView;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.adapter.NavigationDrawerListAdapter;
 import com.example.kim.pickup.adapter.SectionsPagerAdapter;
+import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
+
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
@@ -36,11 +45,77 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      * The {@link ViewPager} that will host the section contents.
      */
     ViewPager mViewPager;
+    // sports name
+    private String mSportName = "";
+
+    // nav drawer title
+    private CharSequence mDrawerTitle;
+
+    // used to store app title
+    private CharSequence mTitle;
+
+
+    private String[] mDrawerTitles;
+    private TypedArray mDrawerIcons;
+
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ArrayList<NavigationDrawerItem> mNavigationDrawerItems;
+    private NavigationDrawerListAdapter mDrawerAdapter;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Set up the action bar.
+        final ActionBar actionBar = getSupportActionBar();
+        mTitle = mDrawerTitle = getTitle();
+
+        mDrawerTitles = getResources().getStringArray(R.array.nav_drawer_items);
+        mDrawerIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mNavigationDrawerItems = new ArrayList<NavigationDrawerItem>();
+
+        mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[0], mDrawerIcons.getResourceId(0, -1)));
+        mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[1], mDrawerIcons.getResourceId(1, -1)));
+        mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[2], mDrawerIcons.getResourceId(2, -1)));
+        mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[3], mDrawerIcons.getResourceId(3, -1)));
+        mDrawerIcons.recycle();
+
+        mDrawerAdapter = new NavigationDrawerListAdapter(getApplication(), mNavigationDrawerItems);
+        mDrawerList.setAdapter(mDrawerAdapter);
+
+
+        // enabling action bar app icon and behaving it as toggle button
+        //actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.listdrawable, //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ){
+            public void onDrawerClosed(View view) {
+                actionBar.setTitle(mSportName + " Pickup Sports");
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                actionBar.setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+
+
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
 
         ParseAnalytics.trackAppOpened(getIntent());
 
@@ -59,11 +134,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Log.i(TAG, currentUser.getUsername() + " " + currentUser.get("sport"));
         }
 
-        // Set up the action bar.
-        final ActionBar actionBar = getSupportActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        actionBar.setTitle(currentUser.get("sport").toString() + "'s Pickup Sports");
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+        mSportName = currentUser.get("sport").toString() + "'s";
+        actionBar.setTitle(mSportName + " Pickup Sports");
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the app.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this);
@@ -96,6 +170,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
 
     }
 

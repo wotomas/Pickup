@@ -8,4 +8,9 @@
 
     <color name="login_editText_color">#79C6BECD</color>
 
+    <!-- drawer navigation color -->
+    <color name="list_background">#363951</color>
+    <color name="list_background_pressed">#D7D7D7</color>
+    <color name="list_item_title">#D7D7D7</color>
+    <color name="counter_text_color">#D7D7D7</color>
 </resources>
