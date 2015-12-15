@@ -17,13 +17,13 @@ import java.util.Calendar;
 /**
  * Created by nylee on 12/12/15.
  */
-public class CustomFragmentAdapter extends BaseAdapter {
+public class CustomPopularityFragmentAdapter extends BaseAdapter {
     Context _context;
     LayoutInflater _inflater;
     ArrayList<Match> _matchList;
     int _layout;
 
-    public CustomFragmentAdapter(Context _context, LayoutInflater _inflater, ArrayList<Match> _matchList, int _layout) {
+    public CustomPopularityFragmentAdapter(Context _context, LayoutInflater _inflater, ArrayList<Match> _matchList, int _layout) {
         this._context = _context;
         this._inflater = _inflater;
         this._matchList = _matchList;
@@ -47,6 +47,7 @@ public class CustomFragmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        //Log.d("FragmentText", )
         if(convertView == null){
             convertView = LayoutInflater.from(_context).inflate(_layout, parent, false);
             //itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
@@ -70,18 +71,17 @@ public class CustomFragmentAdapter extends BaseAdapter {
         TextView roomName = (TextView) convertView.findViewById(R.id.rmName);
         roomName.setText(_matchList.get(position).get_matchName());
 
-        TextView priorityOne = (TextView) convertView.findViewById(R.id.priorityOneText);//time
-        priorityOne.setText(remainingText);
+        TextView priorityOne = (TextView) convertView.findViewById(R.id.priorityOneText);//popularity
+        priorityOne.setText(String.valueOf(_matchList.get(position).getPopularity()) + "/" + String.valueOf(_matchList.get(position).getTotalCapacity()));
 
-        TextView priorityTwo = (TextView) convertView.findViewById(R.id.priorityTwoText);//distance
-        priorityTwo.setText(String.valueOf(_matchList.get(position).get_location())+"km");
+        TextView priorityTwo = (TextView) convertView.findViewById(R.id.priorityTwoText);//time
+        priorityTwo.setText(remainingText);
 
-        TextView priorityThree = (TextView) convertView.findViewById(R.id.priorityThreeText);//popularity
-        priorityThree.setText(String.valueOf(_matchList.get(position).getPopularity()) + "/" + String.valueOf(_matchList.get(position).getTotalCapacity()));
+        TextView priorityThree = (TextView) convertView.findViewById(R.id.priorityThreeText);//distance
+        priorityThree.setText(String.valueOf(_matchList.get(position).get_location())+"km");
 
         ImageView userImage = (ImageView) convertView.findViewById(R.id.rmProfileImage);
         userImage.setImageResource(R.drawable.temp_profile);
-
         return convertView;
     }
 }

@@ -111,6 +111,7 @@ public class CreateMatchActivity extends AppCompatActivity {
 
                 matchObject.setPopularity(0);
                 matchObject.setOwnerID(MainActivity.CURRENT_USER);
+                matchObject.setLocationName(locationSpinner.getSelectedItem().toString());
 
                 Intent intent = new Intent();
                 MatchController.getInstance().addMatch(matchObject, getBaseContext());

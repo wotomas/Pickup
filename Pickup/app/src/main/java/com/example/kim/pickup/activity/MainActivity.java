@@ -15,18 +15,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.adapter.NavigationDrawerListAdapter;
 import com.example.kim.pickup.adapter.SectionsPagerAdapter;
 import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.storage.MatchStorage;
+import com.example.kim.pickup.unit.Match;
 import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
     public static String CURRENT_USER;
@@ -174,6 +178,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
+
             }
         });
 

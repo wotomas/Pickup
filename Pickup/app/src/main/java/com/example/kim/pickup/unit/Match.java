@@ -10,12 +10,24 @@ public class Match implements Serializable{
     private String _matchName;
     private Calendar _startTime;
     private double location;
+    private String locationName;
     private String sportKey;
     private int totalCapacity;
     private int popularity;
     private String ownerID;
 
     //private int[] userIdList;
+    /*
+    1. Need player list.
+    popularity = total count of this player list.
+
+    2. photo?! how to deal with it?
+    MatchRoomActivity needs: total count of photos for each match.
+    Two types of photo needs to be saved:
+        a. background photos for sports types
+        b. match photos for individual matches.
+     */
+
     public Match() {
         this._matchName = "";
         this._startTime = Calendar.getInstance();
@@ -24,16 +36,19 @@ public class Match implements Serializable{
         this.totalCapacity = 0;
         this.popularity = 0;
         this.ownerID = "";
+        this.locationName="";
     }
 
-    public Match(String _matchName, Calendar _startTime, double _distance, String sportName, int totalCapacity, int popularity, String ownerID) {
+    public Match(String _matchName, Calendar _startTime, double _distance, String sportName, int totalCapacity, int popularity, String ownerID, String locationName) {
         this._matchName = _matchName;
         this._startTime = _startTime;
         this.location = _distance;
         this.sportKey = sportName;
         this.totalCapacity = totalCapacity;
         this.popularity = popularity;
+
         this.ownerID = ownerID;
+        this.locationName = locationName;
         //this.userIdList = userIdList;
     }
 
@@ -93,12 +108,12 @@ public class Match implements Serializable{
     public void setOwnerID(String ownerID) {
         this.ownerID = ownerID;
     }
-/*
-    public int[] getUserIdList() {
-        return userIdList;
+
+    public String getLocationName() {
+        return locationName;
     }
 
-    public void insertUserIdList(int userID, int index) {
-        this.userIdList[index] = userID;
-    }*/
+    public void setLocationName(String locationName) {
+        this.locationName = locationName;
+    }
 }
