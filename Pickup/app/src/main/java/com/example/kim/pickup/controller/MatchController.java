@@ -69,5 +69,8 @@ public class MatchController {
         _MatchStorage.saveToParse(context);
     }
 
+    public void localMatchListReset(Context context) {
+        _MatchStorage.localMatchListReset(context);
+    }
 
 }

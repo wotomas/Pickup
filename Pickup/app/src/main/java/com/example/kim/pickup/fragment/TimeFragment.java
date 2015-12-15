@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.kim.pickup.CustomFragmentAdapter;
+import com.example.kim.pickup.adapter.CustomFragmentAdapter;
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.activity.MatchRoomActivity;
@@ -36,8 +36,8 @@ public class TimeFragment extends ListFragment {
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
     static final int VIEW_MATH_DETAIL = 0;
-
-
+    public static ListView list;
+    public static CustomFragmentAdapter mAdapter;
     String sportName = "Basketball";
     String actionBarTitle = sportName;
 
@@ -58,20 +58,20 @@ public class TimeFragment extends ListFragment {
 
     }
 
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_time, container, false);
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
         matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
+
 
         /**
         Calendar date1 = Calendar.getInstance();
@@ -81,10 +81,10 @@ public class TimeFragment extends ListFragment {
         matchArray.add(matchitem);
         **/
 
-        CustomFragmentAdapter _adapter = new CustomFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_time);
+        mAdapter = new CustomFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_time);
 
-        final ListView list = (ListView) rootView.findViewById(R.id.list2);
-        list.setAdapter(_adapter);
+        list = (ListView) rootView.findViewById(R.id.list2);
+        list.setAdapter(mAdapter);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

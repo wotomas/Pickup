@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.kim.pickup.activity.MainActivity;
+import com.example.kim.pickup.fragment.TimeFragment;
 import com.example.kim.pickup.storage.disk.FileManager;
 import com.example.kim.pickup.storage.disk.JsonStorable;
 import com.example.kim.pickup.unit.Match;
@@ -14,8 +15,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MatchStorage implements JsonStorable {
@@ -30,28 +33,46 @@ public class MatchStorage implements JsonStorable {
         _MatchListFromServer = new ArrayList<Match>();
     }
 
+    public void localMatchListReset(Context context) {
+        _MatchListFromServer.clear();
+        saveToJson(context);
+    }
+
     public ArrayList<Match> get_MatchList(String sport, final Context context) {
-        final Match newMatch = new Match();
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
         query.whereEqualTo("sport", MainActivity.CURRENT_USER_SPORTS);
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
             public void done(List<ParseObject> parseObjects, ParseException e) {
                 if(e == null) {
-                    Log.d("ParseTest", "Retrieved Objects count : " + parseObjects.size());
+                    Log.d("ParseTest", "Retrieved Objects count : " + parseObjects.size() + " Current ArrayList Size: " + _MatchListFromServer.size());
                     //object is received. object is match
                     _MatchListFromServer.clear();
 
                     for(ParseObject parseObject: parseObjects) {
-                        newMatch.set_location((double) parseObject.get("location") + 0.0);
-                        newMatch.setTotalCapacity((int) parseObject.get("capacity"));
-                        newMatch.setPopularity((int) parseObject.get("popularity"));
-                        newMatch.set_matchName((String) parseObject.get("matchName"));
-                        newMatch.set_startTime((Calendar) parseObject.get("startTime"));
-                        newMatch.setOwnerID((String) parseObject.get("ownerID"));
-                        newMatch.setSportKey((String)parseObject.get("sport"));
-
+                        Match newMatch = new Match();
+                        newMatch.set_location(parseObject.getDouble("location"));
+                        newMatch.setTotalCapacity(parseObject.getInt("capacity"));
+                        newMatch.setPopularity(parseObject.getInt("popularity"));
+                        newMatch.set_matchName(parseObject.getString("matchName"));
+                        //String Date = parseObject.getString("startTime");
+                        //Fri Dec 18 20:37:44 GMT+08:00 2015
+                        String input = parseObject.getString("startTime");
+                        String dateFormat  = "EEE MMM d HH:mm:ss z yyyy";
+                        Date date = new Date();
+                        try {
+                             date = new SimpleDateFormat(dateFormat).parse(input);
+                        } catch (java.text.ParseException e1) {
+                            e1.printStackTrace();
+                        }
+                        Calendar cal = Calendar.getInstance();
+                        cal.setTime(date);
+                        newMatch.set_startTime(cal);
+                        newMatch.setOwnerID(parseObject.getString("ownerID"));
+                        newMatch.setSportKey(parseObject.getString("sport"));
                         _MatchListFromServer.add(newMatch);
+                        TimeFragment.mAdapter.notifyDataSetChanged();
                     }
                     saveToJson(context);
 
@@ -78,13 +99,12 @@ public class MatchStorage implements JsonStorable {
     public void saveToParse(final Context context) {
         ParseObject newMatch;
         for(final Match match: _MatchList) {
-
             newMatch = new ParseObject("Match");
 
             newMatch.put("ownerID", match.getOwnerID());
             newMatch.put("matchName", match.get_matchName());
             newMatch.put("location", match.get_location());
-            newMatch.put("startTime", match.get_startTime().toString());
+            newMatch.put("startTime", match.get_startTime().getTime().toString());
             newMatch.put("popularity", match.getPopularity());
             newMatch.put("sport", match.getSportKey());
             newMatch.put("capacity", match.getTotalCapacity());

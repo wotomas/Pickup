@@ -1,4 +1,4 @@
-package com.example.kim.pickup;
+package com.example.kim.pickup.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kim.pickup.R;
 import com.example.kim.pickup.unit.Match;
 
 import java.util.ArrayList;
@@ -46,7 +47,6 @@ public class CustomFragmentAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
         if(convertView == null){
             convertView = LayoutInflater.from(_context).inflate(_layout, parent, false);
             //itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);

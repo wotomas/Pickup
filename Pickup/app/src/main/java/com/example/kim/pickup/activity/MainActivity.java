@@ -3,6 +3,7 @@ package com.example.kim.pickup.activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
@@ -66,18 +67,27 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     private ArrayList<NavigationDrawerItem> mNavigationDrawerItems;
     private NavigationDrawerListAdapter mDrawerAdapter;
 
-
+    private Handler handler;
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            MatchController.getInstance().getList(CURRENT_USER_SPORTS, getBaseContext());
+            Log.d("Timer", "Timer is running to get list from server!");
+            handler.postDelayed(this, 5000);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MatchController.getInstance().initMatchStorage(new MatchStorage(), this);
-
+        MatchController.getInstance().localMatchListReset(this);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         mTitle = mDrawerTitle = getTitle();
 
+        handler  = new Handler();
         mDrawerTitles = getResources().getStringArray(R.array.nav_drawer_items);
         mDrawerIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
@@ -153,6 +163,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
+
         // When swiping between different sections, select the corresponding
         // tab. We can also use ActionBar.Tab#select() to do this if we have
         // a reference to the Tab.
@@ -177,8 +188,24 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handler.postDelayed(runnable, 5000);
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        handler.removeCallbacks(runnable);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        handler.removeCallbacks(runnable);
     }
 
     private void navigateToLogin() {
