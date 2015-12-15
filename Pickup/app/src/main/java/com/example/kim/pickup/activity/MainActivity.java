@@ -3,23 +3,24 @@ package com.example.kim.pickup.activity;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import android.view.View;
 import android.widget.ListView;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.adapter.NavigationDrawerListAdapter;
 import com.example.kim.pickup.adapter.SectionsPagerAdapter;
+import com.example.kim.pickup.controller.MatchController;
+import com.example.kim.pickup.storage.MatchStorage;
 import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
@@ -27,7 +28,8 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
-
+    public static String CURRENT_USER;
+    public static String CURRENT_USER_SPORTS;
     private static final String TAG = MainActivity.class.getSimpleName();
     static final int CREATE_MATCH_REQUEST = 0;
 
@@ -70,6 +72,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        MatchController.getInstance().initMatchStorage(new MatchStorage(), this);
+
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         mTitle = mDrawerTitle = getTitle();
@@ -126,11 +130,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         else if( currentUser.get("sport").equals("none") ) {
             //if user exists, but did not select any sports
             //move to select choose activity
+            CURRENT_USER = currentUser.getUsername();
             Intent intent = new Intent(MainActivity.this, SportSelectionActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
+            CURRENT_USER = currentUser.getUsername();
+            CURRENT_USER_SPORTS = currentUser.get("sport").toString();
             Log.i(TAG, currentUser.getUsername() + " " + currentUser.get("sport"));
         }
 
@@ -212,13 +219,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         //Log.d("Return", "Successfully returned data");
-
         // Check which request we're responding to
         if (requestCode == CREATE_MATCH_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
                 //save the result from intent returned.
-                Log.d("testing intent return", "succesfully created match item and returned");
+                Log.d(CreateMatchActivity.TAG, "succesfully created match item and returned");
+                MatchController.getInstance().saveToParse(this);
             }
         }
     }

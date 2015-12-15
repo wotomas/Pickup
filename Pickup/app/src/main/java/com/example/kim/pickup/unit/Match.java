@@ -2,7 +2,6 @@ package com.example.kim.pickup.unit;
 
 import java.io.Serializable;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by nylee on 13/12/15.
@@ -10,18 +9,28 @@ import java.util.Date;
 public class Match implements Serializable{
     private String _matchName;
     private Calendar _startTime;
-    private double _distance;
-    private int sportKey;
+    private double location;
+    private String sportKey;
     private int totalCapacity;
     private int popularity;
-    private int ownerID;
-    //private int[] userIdList;
+    private String ownerID;
 
-    public Match(String _matchName, Calendar _startTime, double _distance, int sportKey, int totalCapacity, int popularity, int ownerID) {
+    //private int[] userIdList;
+    public Match() {
+        this._matchName = "";
+        this._startTime = Calendar.getInstance();
+        this.location = 0.0;
+        this.sportKey = "";
+        this.totalCapacity = 0;
+        this.popularity = 0;
+        this.ownerID = "";
+    }
+
+    public Match(String _matchName, Calendar _startTime, double _distance, String sportName, int totalCapacity, int popularity, String ownerID) {
         this._matchName = _matchName;
         this._startTime = _startTime;
-        this._distance = _distance;
-        this.sportKey = sportKey;
+        this.location = _distance;
+        this.sportKey = sportName;
         this.totalCapacity = totalCapacity;
         this.popularity = popularity;
         this.ownerID = ownerID;
@@ -45,19 +54,19 @@ public class Match implements Serializable{
     }
 
 
-    public double get_distance() {
-        return _distance;
+    public double get_location() {
+        return location;
     }
 
-    public void set_distance(double _distance) {
-        this._distance = _distance;
+    public void set_location(double _distance) {
+        this.location = _distance;
     }
 
-    public int getSportKey() {
+    public String getSportKey() {
         return sportKey;
     }
 
-    public void setSportKey(int sportKey) {
+    public void setSportKey(String sportKey) {
         this.sportKey = sportKey;
     }
 
@@ -77,11 +86,11 @@ public class Match implements Serializable{
         this.popularity = popularity;
     }
 
-    public int getOwnerID() {
+    public String getOwnerID() {
         return ownerID;
     }
 
-    public void setOwnerID(int ownerID) {
+    public void setOwnerID(String ownerID) {
         this.ownerID = ownerID;
     }
 /*

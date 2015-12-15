@@ -50,7 +50,6 @@ public class CustomFragmentAdapter extends BaseAdapter {
         if(convertView == null){
             convertView = LayoutInflater.from(_context).inflate(_layout, parent, false);
             //itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
-
         }
 
         Calendar now = Calendar.getInstance();
@@ -75,7 +74,7 @@ public class CustomFragmentAdapter extends BaseAdapter {
         priorityOne.setText(remainingText);
 
         TextView priorityTwo = (TextView) convertView.findViewById(R.id.priorityTwoText);//distance
-        priorityTwo.setText(String.valueOf(_matchList.get(position).get_distance())+"km");
+        priorityTwo.setText(String.valueOf(_matchList.get(position).get_location())+"km");
 
         TextView priorityThree = (TextView) convertView.findViewById(R.id.priorityThreeText);//popularity
         priorityThree.setText(String.valueOf(_matchList.get(position).getPopularity()) + "/" + String.valueOf(_matchList.get(position).getTotalCapacity()));

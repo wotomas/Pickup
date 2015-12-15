@@ -28,10 +28,14 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/sportsTypeEditText"
                 android:layout_gravity="center_horizontal"
-                android:hint="e.g. Basket Ball"
-                android:gravity="center" />
+                android:gravity="center"
+                android:text="Basketball"
+                android:editable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"/>
         </LinearLayout>
 
         <LinearLayout
@@ -51,10 +55,11 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText3"
+                android:id="@+id/matchTitleEditText"
                 android:layout_gravity="center_horizontal"
                 android:hint="e.g. 5 vs 5 Indoor basketball"
-                android:gravity="center" />
+                android:gravity="center"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +79,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/Location_spinner"
+                android:id="@+id/locationSpinner"
                 android:spinnerMode="dropdown" />
 
         </LinearLayout>
@@ -97,12 +102,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pick Date"
-                android:onClick="showDatePickerDialog" />
+                android:onClick="showDatePickerDialog"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/pickDateButton" />
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pick time"
-                android:onClick="showTimePickerDialog" />
+                android:onClick="showTimePickerDialog"
+                android:layout_marginLeft="5dp"
+                android:id="@+id/pickTimeButton" />
         </LinearLayout>
 
         <LinearLayout
@@ -122,10 +131,12 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText2"
+                android:id="@+id/playerCapacityEditText"
                 android:layout_gravity="center_horizontal"
-                android:hint="Sports type"
-                android:gravity="center" />
+                android:hint="Number of Players"
+                android:gravity="center"
+                android:singleLine="true"
+                android:inputType="number" />
         </LinearLayout>
 
         <LinearLayout
@@ -145,7 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent"
                 android:id="@+id/editText6"
-                android:gravity="clip_vertical" />
+                android:gravity="clip_vertical"
+                android:inputType="textMultiLine" />
         </LinearLayout>
 
         <Button

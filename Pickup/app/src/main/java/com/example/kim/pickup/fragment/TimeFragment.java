@@ -5,27 +5,22 @@ package com.example.kim.pickup.fragment;
  */
 
 import android.content.Intent;
-import android.graphics.Typeface;
-import android.support.v4.app.ListFragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.example.kim.pickup.CustomFragmentAdapter;
 import com.example.kim.pickup.R;
-import com.example.kim.pickup.activity.CreateMatchActivity;
+import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.activity.MatchRoomActivity;
+import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.unit.Match;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -62,13 +57,15 @@ public class TimeFragment extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_time, container, false);
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
+        matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
 
+        /**
         Calendar date1 = Calendar.getInstance();
         date1.add(Calendar.DATE, 2);
 
-
-        Match matchitem = new Match("Football 5 vs 5", date1, 0.5, 1, 15, 13, 20149785);
+        Match matchitem = new Match("Football 5 vs 5", date1, 0.5, MainActivity.CURRENT_USER_SPORTS, 15, 13, "nayeon");
         matchArray.add(matchitem);
+        **/
 
         CustomFragmentAdapter _adapter = new CustomFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_time);
 
@@ -79,7 +76,6 @@ public class TimeFragment extends ListFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object listItem = list.getItemAtPosition(position);
-
                 Intent intent = new Intent(getActivity(), MatchRoomActivity.class);
                 startActivityForResult(intent,VIEW_MATH_DETAIL);
             }
