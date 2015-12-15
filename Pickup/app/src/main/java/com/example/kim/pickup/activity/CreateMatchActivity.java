@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.kim.pickup.R;
@@ -46,6 +47,8 @@ public class CreateMatchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActionBar actionBar = getSupportActionBar();
+        //getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        //getSupportActionBar().setCustomView(R.layout.actionbar_layout);
         actionBar.setTitle("Create New Match");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
 

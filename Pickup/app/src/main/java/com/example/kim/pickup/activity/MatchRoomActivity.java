@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.fragment.DistanceFragment;
+import com.example.kim.pickup.fragment.PopularFragment;
 import com.example.kim.pickup.fragment.TimeFragment;
 import com.example.kim.pickup.unit.Match;
 
@@ -26,7 +28,14 @@ public class MatchRoomActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_match_room);
 
-        thisMatch = TimeFragment.selectedMatch;
+        if(TimeFragment.selectedMatch != null){
+            thisMatch = TimeFragment.selectedMatch;
+        }else if(DistanceFragment.selectedMatch != null){
+            thisMatch = DistanceFragment.selectedMatch;
+        }else if(PopularFragment.selectedMatch != null){
+            thisMatch = PopularFragment.selectedMatch;
+        }
+
         actionBarTitle = MainActivity.CURRENT_USER_SPORTS;
         actionBar.setTitle(actionBarTitle);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));

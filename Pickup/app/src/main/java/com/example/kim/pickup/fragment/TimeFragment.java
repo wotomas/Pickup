@@ -96,7 +96,6 @@ public class TimeFragment extends ListFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Match listItem = (Match)list.getItemAtPosition(position);
                 selectedMatch = listItem;
-                //Log.d("ListenerTest", "ListItem at position " + position + " is " + listItem.get_matchName());
                 Intent intent = new Intent(getActivity(), MatchRoomActivity.class);
                 startActivityForResult(intent, VIEW_MATH_DETAIL);
             }
