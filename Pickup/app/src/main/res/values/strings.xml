@@ -11,5 +11,15 @@
     <string name="title_section3">Popular</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_sport_selection">Select Sports</string>
+    <string name="title_activity_room_selection">RoomSelectionActivity</string>
+    <string name="action_addMatch">Create Match</string>
 
+    <string name="hello_world">Hello world!</string>
+
+    <string name="icon_heart">&#xf004;</string>
+    <string name="fa_icon_areachart">&#xf1fe;</string>
+    <string name="fa_icon_piechart">&#xf200;</string>
+    <string name="fa_icon_linechart">&#xf201;</string>
+    <string name="title_activity_create_match">CreateMatchActivity</string>
+    <string name="title_activity_match_room">MatchRoomActivity</string>
 </resources>

@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.adapter.SectionsPagerAdapter;
@@ -19,6 +20,7 @@ import com.parse.ParseUser;
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
+    static final int CREATE_MATCH_REQUEST = 0;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -104,7 +106,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         startActivity(intent);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -117,15 +118,34 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_logout) {
-            ParseUser.logOut();
-            navigateToLogin();
+        switch (item.getItemId()){
+            case R.id.action_addMatch:
+                Intent intent = new Intent(this, CreateMatchActivity.class);
+                startActivityForResult(intent,CREATE_MATCH_REQUEST);
+                return true;
+            case R.id.action_logout:
+                //noinspection SimplifiableIfStatement
+                ParseUser.logOut();
+                navigateToLogin();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //Log.d("Return", "Successfully returned data");
+
+        // Check which request we're responding to
+        if (requestCode == CREATE_MATCH_REQUEST) {
+            // Make sure the request was successful
+            if (resultCode == RESULT_OK) {
+                //save the result from intent returned.
+                Log.d("testing intent return", "succesfully created match item and returned");
+            }
+        }
     }
 
     @Override

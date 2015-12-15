@@ -38,6 +38,22 @@
             android:name=".activity.SportSelectionActivity"
             android:label="@string/title_activity_sport_selection" >
         </activity>
+        <activity
+            android:name=".activity.CreateMatchActivity"
+            android:label="@string/title_activity_create_match"
+            android:parentActivityName=".activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.kim.pickup.activity.MainActivity" />
+        </activity>
+        <activity
+            android:name=".activity.MatchRoomActivity"
+            android:label="@string/title_activity_match_room"
+            android:parentActivityName=".activity.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.kim.pickup.activity.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

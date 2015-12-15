@@ -1,13 +1,14 @@
 package com.example.kim.pickup.adapter;
 
 /**
- * Created by kim on 2015-10-08.
+ * Created by kim on 2015-10-08. Contribution: Nayeon 2015-10-14
  */
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.fragment.DistanceFragment;
@@ -36,7 +37,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         if(position == 0) {
             return DistanceFragment.newInstance(position + 1);
         } else if(position == 1) {
-            return TimeFragment.newInstance(position + 1);
+            return TimeFragment.newInstance(position+1);
         } else if(position == 2) {
             return PopularFragment.newInstance(position +1);
         } else {

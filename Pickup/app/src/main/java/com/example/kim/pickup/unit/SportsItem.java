@@ -22,6 +22,4 @@ public class SportsItem {
     public void set_name(String _name) {
         this._name = _name;
     }
-
-
 }

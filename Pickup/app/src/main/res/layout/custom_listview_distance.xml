@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_margin="10dp"
+    android:gravity="center" android:id="@+id/customLV_room"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="74dp"
+        android:layout_height="77dp"
+        android:id="@+id/rmProfileImage"
+        android:src="@drawable/temp_profile"
+        android:layout_gravity="center" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name of the room"
+            android:id="@+id/rmName"
+            android:textStyle="bold" android:textSize="18dp"
+            android:layout_marginBottom="20px" />
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="60px"
+                android:layout_height="60px"
+                android:id="@+id/imageView3"
+                android:src="@drawable/location_logo"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0.5km"
+                android:id="@+id/priorityOneText"
+                android:layout_gravity="left"
+                android:layout_marginLeft="55px" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"  android:layout_height="wrap_content"
+                android:gravity="right">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/priorityTwoImage"
+                    android:src="@drawable/time_logo"
+                    android:maxHeight="1px"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1hr 30min"
+                    android:id="@+id/priorityTwoText" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/priorityThreeImage"
+                    android:src="@drawable/quota_logo"
+                    android:layout_marginLeft="30px" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12/15" android:id="@+id/priorityThreeText" />
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</LinearLayout>
