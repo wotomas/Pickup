@@ -57,7 +57,7 @@ public class MatchStorage implements JsonStorable {
                         newMatch.setTotalCapacity(parseObject.getInt("capacity"));
                         newMatch.setPopularity(parseObject.getInt("popularity"));
                         newMatch.set_matchName(parseObject.getString("matchName"));
-
+                        newMatch.setLocationName(parseObject.getString("locationName"));
                         //String Date = parseObject.getString("startTime");
                         //Fri Dec 18 20:37:44 GMT+08:00 2015
                         String input = parseObject.getString("startTime");
@@ -110,6 +110,7 @@ public class MatchStorage implements JsonStorable {
             newMatch.put("popularity", match.getPopularity());
             newMatch.put("sport", match.getSportKey());
             newMatch.put("capacity", match.getTotalCapacity());
+            newMatch.put("locationName", match.getLocationName());
 
             newMatch.saveInBackground(new SaveCallback() {
                 @Override

@@ -7,14 +7,17 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.fragment.DistanceFragment;
+import com.example.kim.pickup.fragment.PopularFragment;
 import com.example.kim.pickup.fragment.TimeFragment;
 import com.example.kim.pickup.unit.Match;
 
 public class MatchRoomActivity extends AppCompatActivity {
 
-    //TODO: Get this from Match Da
+    //TODO: Join match click --> match.popularity++
     String actionBarTitle = "";
     private Match thisMatch;
 
@@ -25,10 +28,26 @@ public class MatchRoomActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_match_room);
 
-        thisMatch = TimeFragment.selectedMatch;
-        actionBarTitle = thisMatch.get_matchName();
+        if(TimeFragment.selectedMatch != null){
+            thisMatch = TimeFragment.selectedMatch;
+        }else if(DistanceFragment.selectedMatch != null){
+            thisMatch = DistanceFragment.selectedMatch;
+        }else if(PopularFragment.selectedMatch != null){
+            thisMatch = PopularFragment.selectedMatch;
+        }
+
+        actionBarTitle = MainActivity.CURRENT_USER_SPORTS;
         actionBar.setTitle(actionBarTitle);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
+
+        TextView selectedSportType = (TextView) findViewById(R.id.sportsType);
+        selectedSportType.setText(thisMatch.get_matchName());
+
+        TextView matchLocation = (TextView) findViewById(R.id.matchLocation);
+        matchLocation.setText(thisMatch.getLocationName());
+
+        TextView player_popularityDetail = (TextView) findViewById(R.id.player_detail_text);
+        player_popularityDetail.setText(thisMatch.getPopularity() + "/" + thisMatch.getTotalCapacity() + " Joined");
     }
 
     @Override

@@ -20,7 +20,7 @@ import android.widget.ListView;
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.activity.MatchRoomActivity;
-import com.example.kim.pickup.adapter.CustomFragmentAdapter;
+import com.example.kim.pickup.adapter.CustomTimeFragmentAdapter;
 import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.unit.Match;
 
@@ -39,8 +39,8 @@ public class TimeFragment extends ListFragment {
 
     static final int VIEW_MATH_DETAIL = 0;
     public static ListView list;
-    public static CustomFragmentAdapter mAdapter;
-    String sportName = "Basketball";
+    public static CustomTimeFragmentAdapter mAdapter;
+    String sportName = MainActivity.CURRENT_USER_SPORTS;
     String actionBarTitle = sportName;
 
     /**
@@ -86,7 +86,7 @@ public class TimeFragment extends ListFragment {
         matchArray.add(matchitem);
         **/
 
-        mAdapter = new CustomFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_time);
+        mAdapter = new CustomTimeFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_time);
 
         list = (ListView) rootView.findViewById(R.id.list2);
         list.setAdapter(mAdapter);
@@ -96,7 +96,6 @@ public class TimeFragment extends ListFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Match listItem = (Match)list.getItemAtPosition(position);
                 selectedMatch = listItem;
-                //Log.d("ListenerTest", "ListItem at position " + position + " is " + listItem.get_matchName());
                 Intent intent = new Intent(getActivity(), MatchRoomActivity.class);
                 startActivityForResult(intent, VIEW_MATH_DETAIL);
             }
