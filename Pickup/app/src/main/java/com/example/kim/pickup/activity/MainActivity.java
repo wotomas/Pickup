@@ -82,7 +82,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MatchController.getInstance().initMatchStorage(new MatchStorage(), this);
-        MatchController.getInstance().localMatchListReset(this);
+        //MatchController.getInstance().localMatchListReset(this);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         mTitle = mDrawerTitle = getTitle();

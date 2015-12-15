@@ -17,10 +17,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.kim.pickup.adapter.CustomFragmentAdapter;
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.activity.MatchRoomActivity;
+import com.example.kim.pickup.adapter.CustomFragmentAdapter;
 import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.unit.Match;
 
@@ -35,6 +35,8 @@ public class TimeFragment extends ListFragment {
      * fragment.
      */
     private static final String ARG_SECTION_NUMBER = "section_number";
+    public static Match selectedMatch;
+
     static final int VIEW_MATH_DETAIL = 0;
     public static ListView list;
     public static CustomFragmentAdapter mAdapter;
@@ -58,6 +60,10 @@ public class TimeFragment extends ListFragment {
 
     }
 
+    public Match getSelectedMatch() {
+        return selectedMatch;
+    }
+
 
 
     @Override
@@ -71,7 +77,6 @@ public class TimeFragment extends ListFragment {
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
         matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
-
 
         /**
         Calendar date1 = Calendar.getInstance();
@@ -89,7 +94,9 @@ public class TimeFragment extends ListFragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object listItem = list.getItemAtPosition(position);
+                Match listItem = (Match)list.getItemAtPosition(position);
+                selectedMatch = listItem;
+                //Log.d("ListenerTest", "ListItem at position " + position + " is " + listItem.get_matchName());
                 Intent intent = new Intent(getActivity(), MatchRoomActivity.class);
                 startActivityForResult(intent, VIEW_MATH_DETAIL);
             }

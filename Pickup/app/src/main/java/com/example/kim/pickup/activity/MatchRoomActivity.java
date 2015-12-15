@@ -2,26 +2,33 @@ package com.example.kim.pickup.activity;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.fragment.TimeFragment;
+import com.example.kim.pickup.unit.Match;
 
 public class MatchRoomActivity extends AppCompatActivity {
 
     //TODO: Get this from Match Da
-    String actionBarTitle = "5 vs 5 at LG1 Indoor";
+    String actionBarTitle = "";
+    private Match thisMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getSupportActionBar();
+
+        setContentView(R.layout.activity_match_room);
+
+        thisMatch = TimeFragment.selectedMatch;
+        actionBarTitle = thisMatch.get_matchName();
         actionBar.setTitle(actionBarTitle);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
-        setContentView(R.layout.activity_match_room);
     }
 
     @Override

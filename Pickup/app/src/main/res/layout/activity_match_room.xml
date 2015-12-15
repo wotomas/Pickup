@@ -15,8 +15,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/imageView4" android:src="@drawable/basketball_court"
-            android:maxWidth="50dp"
-            android:maxHeight="50dp"/>
+            android:scaleType="fitXY" />
 
         <LinearLayout
             android:orientation="vertical"
