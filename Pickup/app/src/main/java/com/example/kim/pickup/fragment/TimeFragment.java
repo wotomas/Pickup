@@ -5,8 +5,12 @@ package com.example.kim.pickup.fragment;
  */
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,9 @@ public class TimeFragment extends ListFragment {
     static final int VIEW_MATH_DETAIL = 0;
 
 
+    String sportName = "Basketball";
+    String actionBarTitle = sportName;
+
     /**
      * Returns a new instance of this fragment for the given section
      * number.
@@ -48,6 +55,13 @@ public class TimeFragment extends ListFragment {
     }
 
     public TimeFragment() {
+
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
 
     }
 
@@ -77,10 +91,15 @@ public class TimeFragment extends ListFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Object listItem = list.getItemAtPosition(position);
                 Intent intent = new Intent(getActivity(), MatchRoomActivity.class);
-                startActivityForResult(intent,VIEW_MATH_DETAIL);
+                startActivityForResult(intent, VIEW_MATH_DETAIL);
             }
         }
         );
+
+
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle(actionBarTitle);
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
 
         return rootView;
     }
