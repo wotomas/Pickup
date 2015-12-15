@@ -53,9 +53,11 @@ public class MatchStorage implements JsonStorable {
                     for(ParseObject parseObject: parseObjects) {
                         Match newMatch = new Match();
                         newMatch.set_location(parseObject.getDouble("location"));
+
                         newMatch.setTotalCapacity(parseObject.getInt("capacity"));
                         newMatch.setPopularity(parseObject.getInt("popularity"));
                         newMatch.set_matchName(parseObject.getString("matchName"));
+
                         //String Date = parseObject.getString("startTime");
                         //Fri Dec 18 20:37:44 GMT+08:00 2015
                         String input = parseObject.getString("startTime");

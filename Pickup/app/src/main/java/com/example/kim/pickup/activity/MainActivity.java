@@ -1,5 +1,7 @@
 package com.example.kim.pickup.activity;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -15,12 +17,16 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.adapter.NavigationDrawerListAdapter;
 import com.example.kim.pickup.adapter.SectionsPagerAdapter;
 import com.example.kim.pickup.controller.MatchController;
+import com.example.kim.pickup.fragment.FriendsFragment;
+import com.example.kim.pickup.fragment.MessageFragment;
+import com.example.kim.pickup.fragment.ProfileFragment;
 import com.example.kim.pickup.storage.MatchStorage;
 import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
@@ -98,11 +104,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[0], mDrawerIcons.getResourceId(0, -1)));
         mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[1], mDrawerIcons.getResourceId(1, -1)));
         mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[2], mDrawerIcons.getResourceId(2, -1)));
-        mNavigationDrawerItems.add(new NavigationDrawerItem(mDrawerTitles[3], mDrawerIcons.getResourceId(3, -1)));
         mDrawerIcons.recycle();
 
         mDrawerAdapter = new NavigationDrawerListAdapter(getApplication(), mNavigationDrawerItems);
         mDrawerList.setAdapter(mDrawerAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
         // enabling action bar app icon and behaving it as toggle button
@@ -268,5 +274,48 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
+
+    public class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(view, position);
+        }
+
+        private void selectItem(View view, int position) {
+            Fragment fragment = null;
+
+            switch(position) {
+                case 0:
+                    fragment = new ProfileFragment();
+                    break;
+                case 1:
+                    fragment = new MessageFragment();
+                    break;
+                case 2:
+                    fragment = new FriendsFragment();
+                    break;
+
+                default:
+                    break;
+            }
+
+            if (fragment != null) {
+                FragmentManager fragmentManager = getFragmentManager();
+
+                fragmentManager.beginTransaction().replace(R.id.drawer_layout, fragment, "mainFragment")
+                        .addToBackStack("mainFragment").commit();
+
+                //update selected item and title, then close the drawer
+                mDrawerList.setItemChecked(position, true);
+                mDrawerList.setSelection(position);
+                setTitle(mDrawerTitles[position]);
+                mDrawerLayout.closeDrawer(mDrawerList);
+            } else {
+                Log.e(TAG, "Error in creating fragment");
+            }
+
+
+        }
     }
 }

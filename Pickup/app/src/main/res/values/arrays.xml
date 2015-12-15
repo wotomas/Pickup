@@ -14,4 +14,14 @@
         <item>Mini-Soccer Pitch</item>
     </string-array>
 
+    <string-array name="preferedSports">
+        <item>tennis</item>
+        <item>tableTennis</item>
+        <item>squash</item>
+        <item>pool</item>
+        <item>badminton</item>
+        <item>basketball</item>
+        <item>soccer</item>
+        <item>volleyball</item>
+    </string-array>
 </resources>
