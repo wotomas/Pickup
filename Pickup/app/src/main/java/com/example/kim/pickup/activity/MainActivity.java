@@ -84,10 +84,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public void run() {
             MatchController.getInstance().getList(CURRENT_USER_SPORTS, getBaseContext());
-            Log.d("Timer", "Timer is running to get list from server!");
-            handler.postDelayed(this, 5000);
+            MatchController.getInstance().sortMatches(getBaseContext());
+            Log.d("Timer", "Runnable is set to popularity");
+            handler.postDelayed(this, 1000);
         }
     };
+
     private GPSTracker gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +197,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // a reference to the Tab.
         mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
-            public void onPageSelected(int position) {
+            public void onPageSelected(final int position) {
                 actionBar.setSelectedNavigationItem(position);
             }
         });
@@ -236,7 +238,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             CURRENT_USER_SPORTS = currentUser.get("sport").toString();
             Log.i(TAG, currentUser.getUsername() + " " + currentUser.get("sport"));
         }
-        handler.postDelayed(runnable, 5000);
+        handler.postDelayed(runnable, 1000);
     }
 
     @Override

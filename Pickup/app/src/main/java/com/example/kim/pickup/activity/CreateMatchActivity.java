@@ -190,6 +190,7 @@ public class CreateMatchActivity extends AppCompatActivity {
                 //intent.putExtra("MatchObject", matchObject);
                 setResult(RESULT_OK, intent);
                 finish();
+                MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getBaseContext());
             }
         });
     }

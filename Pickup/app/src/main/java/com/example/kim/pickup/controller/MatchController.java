@@ -60,10 +60,13 @@ public class MatchController {
     public void updateMatch(Match thisMatch) {
         _MatchStorage.updateMatch(thisMatch);
     }
+
     public ArrayList<Match> getList(String CURRENT_USER_SPORTS, Context context) {
         return _MatchStorage.get_MatchList(CURRENT_USER_SPORTS, context);
     }
-
+    public void sortMatches(Context baseContext) {
+        _MatchStorage.sortAccordingly(baseContext);
+    }
     public int getTotalSize() {
         return _MatchStorage.get_totalSIze();
     }
@@ -76,7 +79,6 @@ public class MatchController {
         _MatchStorage.localMatchListReset(context);
     }
 
-
     public void removeMatch(Match thisMatch) {
         _MatchStorage.removeMatch(thisMatch);
     }
@@ -88,4 +90,18 @@ public class MatchController {
     public void joinMatch(Match thisMatch) {
         _MatchStorage.joinMatch(thisMatch);
     }
+
+    public ArrayList<Match> getPopularityList() {
+        return _MatchStorage.getPopularityList();
+    }
+
+    public ArrayList<Match> getDistanceList() {
+        return _MatchStorage.getDistanceList();
+    }
+
+    public ArrayList<Match> getTimeList() {
+        return _MatchStorage.getTimeList();
+    }
+
+
 }

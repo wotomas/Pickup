@@ -20,13 +20,25 @@ import com.parse.SaveCallback;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MatchStorage implements JsonStorable {
 
     private ArrayList<Match> _MatchList;
     private ArrayList<Match> _MatchListFromServer;
+
+    //closest
+    private ArrayList<Match> _matchSortedThroughDistance;
+
+    //earliest
+    private ArrayList<Match> _matchSortedThroughTime;
+
+    //popular
+    private ArrayList<Match> _matchSortedThroughPopularity;
 
     private int _MatchNumber = 0;
 
@@ -34,11 +46,78 @@ public class MatchStorage implements JsonStorable {
     public MatchStorage() {
         _MatchList = new ArrayList<Match>();
         _MatchListFromServer = new ArrayList<Match>();
+        _matchSortedThroughDistance = new ArrayList<Match>();
+        _matchSortedThroughTime = new ArrayList<Match>();
+        _matchSortedThroughPopularity = new ArrayList<Match>();
     }
 
     public void localMatchListReset(Context context) {
         _MatchListFromServer.clear();
         saveToJson(context);
+    }
+
+    public void sortAccordingly(Context context) {
+        ArrayList<Match> sample = new ArrayList<Match>();
+        sample.addAll(_MatchListFromServer);
+
+        _matchSortedThroughTime = doMergeSort(sample, "time");
+        if(TimeFragment.mAdapter != null)
+            TimeFragment.mAdapter.notifyDataSetChanged();
+        //Log.d("SortingTest", "Sorted Through time: " + _matchSortedThroughTime.toString());
+        _matchSortedThroughDistance = doMergeSort(sample, "time");
+        if(DistanceFragment.mAdapter != null)
+            DistanceFragment.mAdapter.notifyDataSetChanged();
+        //Log.d("SortingTest", "Sorted Through comments: " + _matchSortedThroughDistance.toString());
+        _matchSortedThroughPopularity = doMergeSort(sample, "popularity");
+        if(PopularFragment.mAdapter != null)
+            PopularFragment.mAdapter.notifyDataSetChanged();
+        saveToJson(context);
+        //Log.d("SortingTest", "Sorted Through points: " + _matchSortedThroughPopularity.toString());
+    }
+
+    public ArrayList<Match> getPopularityList() {
+        return _matchSortedThroughPopularity;
+    }
+
+    public ArrayList<Match> getDistanceList() {
+        return _matchSortedThroughDistance;
+    }
+
+    public ArrayList<Match> getTimeList() {
+        return _matchSortedThroughTime;
+    }
+
+    public ArrayList<Match> doMergeSort(ArrayList<Match> matchList, String type) {
+        ArrayList<Match> output = new ArrayList<Match>();
+        output.addAll(matchList);
+
+        if(type.equals("time")) {
+            Collections.sort(output, new Comparator<Match>() {
+                @Override
+                public int compare(Match lhs, Match rhs) {
+                    return rhs.get_startTime().getTime().compareTo(lhs.get_startTime().getTime());
+                }
+            });
+            Log.d("Sorting Test", "Sort Once!");
+        } else if(type.equals("popularity")) {
+            Collections.sort(output, new Comparator<Match>() {
+                @Override
+                public int compare(Match lhs, Match rhs) {
+                    return rhs.getPopularity() - lhs.getPopularity();
+                }
+            });
+            Log.d("Sorting Test", "Sort Twice!");
+        } else if(type.equals("distance")) {
+            Collections.sort(output, new Comparator<Match>() {
+                @Override
+                public int compare(Match lhs, Match rhs) {
+                    double distance = rhs.get_location().distanceInKilometersTo(lhs.get_location());
+                    return (int)(distance * 100);
+                }
+            });
+            Log.d("Sorting Test", "Sort Thrice!");
+        }
+        return output;
     }
 
     public ArrayList<Match> get_MatchList(String sport, final Context context) {
@@ -71,19 +150,15 @@ public class MatchStorage implements JsonStorable {
                         } catch (java.text.ParseException e1) {
                             e1.printStackTrace();
                         }
-                        Calendar cal = Calendar.getInstance();
+                        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                         cal.setTime(date);
                         newMatch.set_startTime(cal);
                         newMatch.setOwnerID(parseObject.getString("ownerID"));
                         newMatch.setSportKey(parseObject.getString("sport"));
                         _MatchListFromServer.add(newMatch);
-                        if(TimeFragment.mAdapter != null)
-                            TimeFragment.mAdapter.notifyDataSetChanged();
-                        if(DistanceFragment.mAdapter != null)
-                            DistanceFragment.mAdapter.notifyDataSetChanged();
-                        if(PopularFragment.mAdapter != null)
-                            PopularFragment.mAdapter.notifyDataSetChanged();
+
                     }
+                    sortAccordingly(context);
                     saveToJson(context);
 
                 } else {

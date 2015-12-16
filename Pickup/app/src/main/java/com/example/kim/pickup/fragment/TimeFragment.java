@@ -76,8 +76,8 @@ public class TimeFragment extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_time, container, false);
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
-        matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
-
+        MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
+        matchArray = MatchController.getInstance().getTimeList();
         /**
         Calendar date1 = Calendar.getInstance();
         date1.add(Calendar.DATE, 2);

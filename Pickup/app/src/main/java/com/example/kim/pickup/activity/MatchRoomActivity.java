@@ -71,7 +71,7 @@ public class MatchRoomActivity extends AppCompatActivity {
         player_popularityDetail.setText(thisMatch.getUsersCount() + "/" + thisMatch.getTotalCapacity() + " Joined");
 
         joinButton = (Button) findViewById(R.id.join_game_button);
-        if(thisMatch.getOwnerID() == MainActivity.CURRENT_USER) {
+        if(thisMatch.getOwnerID().equals(MainActivity.CURRENT_USER)) {
             joinButton.setText("Remove Game");
             joinButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -79,6 +79,7 @@ public class MatchRoomActivity extends AppCompatActivity {
                     //remove game on click
                     MatchController.getInstance().removeMatch(thisMatch);
                     finish();
+                    MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS,  getBaseContext());
                 }
             });
         } else {
@@ -92,6 +93,7 @@ public class MatchRoomActivity extends AppCompatActivity {
                         //withdraw from list
                         MatchController.getInstance().withdrawFromMatch(thisMatch);
                         finish();
+                        MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getBaseContext());
                     }
                 });
             } else {
@@ -101,6 +103,7 @@ public class MatchRoomActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         MatchController.getInstance().joinMatch(thisMatch);
                         finish();
+                        MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getBaseContext());
                     }
                 });
             }

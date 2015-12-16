@@ -72,8 +72,8 @@ public class PopularFragment extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_popular, container, false);
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
-        matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
-
+        MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
+        matchArray = MatchController.getInstance().getDistanceList();
         mAdapter = new CustomPopularityFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_popular);
 
         list = (ListView) rootView.findViewById(R.id.list4);

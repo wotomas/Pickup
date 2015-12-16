@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by nylee on 13/12/15.
  */
-public class Match implements Serializable{
+public class Match implements Serializable, Comparable<Match> {
     private String _matchName;
     private Calendar _startTime;
     private ParseGeoPoint location;
@@ -154,5 +154,10 @@ public class Match implements Serializable{
             }
         }
         return false;
+    }
+
+    @Override
+    public int compareTo(Match another) {
+        return another.get_startTime().compareTo(this.get_startTime());
     }
 }

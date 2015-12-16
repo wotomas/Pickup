@@ -17,6 +17,7 @@ import com.parse.ParseGeoPoint;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by nylee on 12/12/15.
@@ -57,7 +58,7 @@ public class CustomPopularityFragmentAdapter extends BaseAdapter {
             //itemView = getLayoutInflater().inflate(R.layout.item_view, parent, false);
         }
 
-        Calendar now = Calendar.getInstance();
+        Calendar now = Calendar.getInstance(TimeZone.getDefault());
         Calendar startTime = _matchList.get(position).get_startTime();
         String remainingText;
 

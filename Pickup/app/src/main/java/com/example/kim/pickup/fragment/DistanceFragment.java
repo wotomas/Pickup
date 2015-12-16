@@ -72,8 +72,8 @@ public class DistanceFragment extends ListFragment {
         View rootView = inflater.inflate(R.layout.fragment_distance, container, false);
 
         ArrayList<Match> matchArray = new ArrayList<Match>();
-        matchArray = MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
-
+        MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, getContext());
+        matchArray = MatchController.getInstance().getDistanceList();
         mAdapter = new CustomDistanceFragmentAdapter(this.getContext(),inflater,matchArray,R.layout.custom_listview_distance);
 
         list = (ListView) rootView.findViewById(R.id.list3);
