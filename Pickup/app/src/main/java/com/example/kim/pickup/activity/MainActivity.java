@@ -30,6 +30,7 @@ import com.example.kim.pickup.fragment.MessageFragment;
 import com.example.kim.pickup.fragment.ProfileFragment;
 import com.example.kim.pickup.service.GPSTracker;
 import com.example.kim.pickup.storage.MatchStorage;
+import com.example.kim.pickup.storage.disk.FileManager;
 import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
 import com.parse.ParseUser;
@@ -92,8 +93,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        FileManager.getInstance().deleteMatchJson(this);
         MatchController.getInstance().initMatchStorage(new MatchStorage(), this);
-
         gps = new GPSTracker(this);
         if(gps.canGetLocation()) {
             currentX = gps.getLatitude();
