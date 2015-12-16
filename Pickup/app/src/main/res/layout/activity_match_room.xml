@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/imageView4" android:src="@drawable/basketball_court"
+            android:id="@+id/courtImageView" android:src="@drawable/basketball_court"
             android:scaleType="fitXY" />
 
         <LinearLayout
@@ -164,6 +164,8 @@
             android:layout_gravity="center"
             android:layout_marginBottom="30dp"
             android:background="@drawable/pink_button" />
+
+
     </LinearLayout>
 
 </LinearLayout>

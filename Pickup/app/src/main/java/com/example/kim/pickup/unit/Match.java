@@ -1,7 +1,13 @@
 package com.example.kim.pickup.unit;
 
+import android.util.Log;
+
+import com.parse.ParseGeoPoint;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by nylee on 13/12/15.
@@ -9,12 +15,13 @@ import java.util.Calendar;
 public class Match implements Serializable{
     private String _matchName;
     private Calendar _startTime;
-    private double location;
+    private ParseGeoPoint location;
     private String locationName;
     private String sportKey;
     private int totalCapacity;
     private int popularity;
     private String ownerID;
+    private List<String> users;
 
     //private int[] userIdList;
     /*
@@ -31,24 +38,26 @@ public class Match implements Serializable{
     public Match() {
         this._matchName = "";
         this._startTime = Calendar.getInstance();
-        this.location = 0.0;
+        this.location = null;
         this.sportKey = "";
         this.totalCapacity = 0;
         this.popularity = 0;
         this.ownerID = "";
         this.locationName="";
+        this.users = new ArrayList<String>();
     }
 
-    public Match(String _matchName, Calendar _startTime, double _distance, String sportName, int totalCapacity, int popularity, String ownerID, String locationName) {
+    public Match(String _matchName, Calendar _startTime, ParseGeoPoint location, String sportName, int totalCapacity, int popularity, String ownerID, String locationName) {
         this._matchName = _matchName;
         this._startTime = _startTime;
-        this.location = _distance;
+        this.location = location;
         this.sportKey = sportName;
         this.totalCapacity = totalCapacity;
         this.popularity = popularity;
 
         this.ownerID = ownerID;
         this.locationName = locationName;
+        this.users = new ArrayList<String>();
         //this.userIdList = userIdList;
     }
 
@@ -69,12 +78,12 @@ public class Match implements Serializable{
     }
 
 
-    public double get_location() {
+    public ParseGeoPoint get_location() {
         return location;
     }
 
-    public void set_location(double _distance) {
-        this.location = _distance;
+    public void set_location(ParseGeoPoint location) {
+        this.location = location;
     }
 
     public String getSportKey() {
@@ -115,5 +124,26 @@ public class Match implements Serializable{
 
     public void setLocationName(String locationName) {
         this.locationName = locationName;
+    }
+
+    public List<String> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<Object> users) {
+        this.users.clear();
+        for(Object obj: users) {
+            this.users.add((String) obj);
+            Log.d("UserListTest", "User is added is: " + (String) obj);
+        }
+        Log.d("UserListTest", "User List is: " + this.users.toString());
+    }
+
+    public void addUsers(String user) {
+        this.users.add(user);
+    }
+
+    public int getUsersCount() {
+        return this.users.size();
     }
 }

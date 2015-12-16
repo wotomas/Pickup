@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.activity.MainActivity;
+import com.example.kim.pickup.controller.MatchController;
+import com.parse.ParseUser;
 
 public class ProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -63,7 +65,7 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
@@ -75,25 +77,13 @@ public class ProfileFragment extends Fragment {
         okButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /**
-                ParseQuery<ParseUser> query = ParseQuery.getQuery("User");
-                query.whereEqualTo("username", MainActivity.CURRENT_USER);
-                query.findInBackground(new FindCallback<ParseUser>() {
-                    @Override
-                    public void done(List<ParseUser> parseUsers, ParseException e) {
-                        if(e == null) {
-                            //no error
-                            for(ParseUser user: parseUsers) {
-                                user.put("sport", selectedSports);
-                                user.saveInBackground();
-                            }
-
-                        } else {
-                            //error retrieving user
-                        }
-                    }
-                });
-                **/
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if(currentUser != null) {
+                    currentUser.put("sport", selectedSports);
+                    currentUser.saveInBackground();
+                    MainActivity.CURRENT_USER_SPORTS = selectedSports;
+                    MatchController.getInstance().getList(MainActivity.CURRENT_USER_SPORTS, container.getContext());
+                }
                 Log.d("CloseProfile", "Close Fragment");
                 //close
                 getActivity().getFragmentManager().popBackStack();

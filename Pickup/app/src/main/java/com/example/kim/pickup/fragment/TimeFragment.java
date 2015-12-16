@@ -41,7 +41,7 @@ public class TimeFragment extends ListFragment {
     public static ListView list;
     public static CustomTimeFragmentAdapter mAdapter;
     String sportName = MainActivity.CURRENT_USER_SPORTS;
-    String actionBarTitle = sportName;
+    //String actionBarTitle = sportName;
 
     /**
      * Returns a new instance of this fragment for the given section
@@ -104,7 +104,7 @@ public class TimeFragment extends ListFragment {
 
 
         ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
-        actionBar.setTitle(actionBarTitle);
+        actionBar.setTitle(MainActivity.CURRENT_USER_SPORTS + " Pickup Sports");
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
 
         return rootView;

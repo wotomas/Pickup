@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.example.kim.pickup.activity.MainActivity;
+import com.example.kim.pickup.fragment.DistanceFragment;
+import com.example.kim.pickup.fragment.PopularFragment;
 import com.example.kim.pickup.fragment.TimeFragment;
 import com.example.kim.pickup.storage.disk.FileManager;
 import com.example.kim.pickup.storage.disk.JsonStorable;
@@ -28,6 +30,7 @@ public class MatchStorage implements JsonStorable {
 
     private int _MatchNumber = 0;
 
+
     public MatchStorage() {
         _MatchList = new ArrayList<Match>();
         _MatchListFromServer = new ArrayList<Match>();
@@ -39,7 +42,6 @@ public class MatchStorage implements JsonStorable {
     }
 
     public ArrayList<Match> get_MatchList(String sport, final Context context) {
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
         query.whereEqualTo("sport", MainActivity.CURRENT_USER_SPORTS);
         query.findInBackground(new FindCallback<ParseObject>() {
@@ -52,12 +54,13 @@ public class MatchStorage implements JsonStorable {
 
                     for(ParseObject parseObject: parseObjects) {
                         Match newMatch = new Match();
-                        newMatch.set_location(parseObject.getDouble("location"));
+                        newMatch.set_location(parseObject.getParseGeoPoint("location"));
 
                         newMatch.setTotalCapacity(parseObject.getInt("capacity"));
                         newMatch.setPopularity(parseObject.getInt("popularity"));
                         newMatch.set_matchName(parseObject.getString("matchName"));
                         newMatch.setLocationName(parseObject.getString("locationName"));
+                        newMatch.setUsers(parseObject.getList("userList"));
                         //String Date = parseObject.getString("startTime");
                         //Fri Dec 18 20:37:44 GMT+08:00 2015
                         String input = parseObject.getString("startTime");
@@ -74,7 +77,12 @@ public class MatchStorage implements JsonStorable {
                         newMatch.setOwnerID(parseObject.getString("ownerID"));
                         newMatch.setSportKey(parseObject.getString("sport"));
                         _MatchListFromServer.add(newMatch);
-                        TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(TimeFragment.mAdapter != null)
+                            TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(DistanceFragment.mAdapter != null)
+                            DistanceFragment.mAdapter.notifyDataSetChanged();
+                        if(PopularFragment.mAdapter != null)
+                            PopularFragment.mAdapter.notifyDataSetChanged();
                     }
                     saveToJson(context);
 
@@ -84,7 +92,6 @@ public class MatchStorage implements JsonStorable {
                 }
             }
         });
-
         return _MatchListFromServer;
     }
 
@@ -98,6 +105,35 @@ public class MatchStorage implements JsonStorable {
         saveToJson(context);
     }
 
+
+    public void updateMatch(Match thisMatch, final Context context) {
+        final Match newMatch = thisMatch;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
+        query.whereEqualTo("sport", thisMatch.getSportKey()).whereEqualTo("location", thisMatch.get_location()).whereEqualTo("matchName", thisMatch.get_matchName());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e == null) {
+                    Log.d("ParseTest", "Retrieved Object to update count : " + parseObjects.size());
+                    for(ParseObject parseObject: parseObjects) {
+                        parseObject.put("popularity", newMatch.getPopularity());
+                        parseObject.saveInBackground();
+
+                        if(TimeFragment.mAdapter != null)
+                            TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(DistanceFragment.mAdapter != null)
+                            DistanceFragment.mAdapter.notifyDataSetChanged();
+                        if(PopularFragment.mAdapter != null)
+                            PopularFragment.mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    // something went wrong
+                    Log.d("ParseTest", "Error : " + e.getMessage());
+                }
+            }
+        });
+    }
+
     public void saveToParse(final Context context) {
         ParseObject newMatch;
         for(final Match match: _MatchList) {
@@ -105,12 +141,14 @@ public class MatchStorage implements JsonStorable {
 
             newMatch.put("ownerID", match.getOwnerID());
             newMatch.put("matchName", match.get_matchName());
-            newMatch.put("location", match.get_location());
             newMatch.put("startTime", match.get_startTime().getTime().toString());
             newMatch.put("popularity", match.getPopularity());
             newMatch.put("sport", match.getSportKey());
             newMatch.put("capacity", match.getTotalCapacity());
             newMatch.put("locationName", match.getLocationName());
+            newMatch.put("location", match.get_location());
+            Log.d("UserListTest", "User list before sending to parse is: " + match.getUsers().toString());
+            newMatch.addAll("userList", match.getUsers());
 
             newMatch.saveInBackground(new SaveCallback() {
                 @Override

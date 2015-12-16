@@ -21,12 +21,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.unit.Match;
+import com.parse.ParseGeoPoint;
 
 import java.util.Calendar;
 
@@ -41,6 +41,7 @@ public class CreateMatchActivity extends AppCompatActivity {
     EditText sportsTypeEditText;
     EditText matchTitleEditText;
     EditText playerCapacityEditText;
+    String selectedLocation = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +62,29 @@ public class CreateMatchActivity extends AppCompatActivity {
         sportsTypeEditText = (EditText) findViewById(R.id.sportsTypeEditText);
         sportsTypeEditText.setText(MainActivity.CURRENT_USER_SPORTS);
         playerCapacityEditText = (EditText) findViewById(R.id.playerCapacityEditText);
+
+
+        //matchObject.set_location(0);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getBaseContext(), R.array.location, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        locationSpinner.setAdapter(adapter);
+        locationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // An item was selected. You can retrieve the selected item using
+                // parent.getItemAtPosition(pos)
+                String item = (String) parent.getItemAtPosition(position);
+                selectedLocation = item;
+                Log.d("testing Spinner", "Spinner item selected is: " + selectedLocation + " " + item.toString());
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Log.d("testing Spinner", "Nothing selected");
+            }
+        });
 
         createButton = (Button) findViewById(R.id.createRoomButton);
         createButton.setOnClickListener(new Button.OnClickListener() {
@@ -100,8 +124,52 @@ public class CreateMatchActivity extends AppCompatActivity {
                 saveDate.set(Calendar.MINUTE, Integer.parseInt(times[1]));
                 matchObject.set_startTime(saveDate);
 
+                // location geo points
 
-                matchObject.set_location(0);
+                ParseGeoPoint locationPoint;
+                switch(selectedLocation) {
+                    case "S H Ho Sports Hall":
+                        // S H HO Sports Hall 22.338325, 114.263317
+                        locationPoint = new ParseGeoPoint(22.338325, 114.263317);
+                        break;
+                    case "Seafront Basketball Court":
+                        // Seafront Basketball Court 22.337516, 114.268863
+                        locationPoint = new ParseGeoPoint(22.337516, 114.268863);
+                        break;
+                    case "Table-Tennis Room":
+                        // Table-Tennis Room 22.337836, 114.263657
+                        locationPoint = new ParseGeoPoint(22.337836, 114.263657);
+                        break;
+                    case "Tennis court 1":
+                        // Tennis court 1 22.334297, 114.263025
+                        locationPoint = new ParseGeoPoint(22.334297, 114.263025);
+                        break;
+                    case "Tennis court 2":
+                        // Tennis court 2 22.334297, 114.263025
+                        locationPoint = new ParseGeoPoint(22.334297, 114.263025);
+                        break;
+                    case "Tennis court 3":
+                        // Tennis court 3 22.334297, 114.263025
+                        locationPoint = new ParseGeoPoint(22.334297, 114.263025);
+                        break;
+                    case "Artificial Turf Soccer Pitch":
+                        // Artificial Turf Soccer Pitch 22.337229, 114.268358
+                        locationPoint = new ParseGeoPoint(22.337229, 114.268358);
+                        break;
+                    case "Squash court":
+                        // Squash court 22.338349, 114.263223
+                        locationPoint = new ParseGeoPoint(22.338349, 114.263223);
+                        break;
+                    case "Mini-Soccer Pitch":
+                        // Mini-Soccer Pitch 22.337450, 114.269093
+                        locationPoint = new ParseGeoPoint(22.337450, 114.269093);
+                        break;
+
+                    default:
+                        locationPoint = new ParseGeoPoint(0,0);
+                        break;
+                }
+                matchObject.set_location(locationPoint);
 
                 matchObject.setSportKey(MainActivity.CURRENT_USER_SPORTS);
 
@@ -115,35 +183,13 @@ public class CreateMatchActivity extends AppCompatActivity {
                 matchObject.setPopularity(0);
                 matchObject.setOwnerID(MainActivity.CURRENT_USER);
                 matchObject.setLocationName(locationSpinner.getSelectedItem().toString());
+                matchObject.addUsers(MainActivity.CURRENT_USER);
 
                 Intent intent = new Intent();
                 MatchController.getInstance().addMatch(matchObject, getBaseContext());
                 //intent.putExtra("MatchObject", matchObject);
                 setResult(RESULT_OK, intent);
                 finish();
-            }
-        });
-
-        Spinner spinner = (Spinner) findViewById(R.id.locationSpinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.location, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // An item was selected. You can retrieve the selected item using
-                // parent.getItemAtPosition(pos)
-                Object item = parent.getItemAtPosition(position);
-                Log.d("testing Spinner", "Spinner item selected is: " + item.toString());
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                Log.d("testing Spinner", "Nothing selected");
             }
         });
     }

@@ -57,6 +57,9 @@ public class MatchController {
         _MatchStorage.addMatch(Match, context);
     }
 
+    public void updateMatch(Match thisMatch, Context context) {
+        _MatchStorage.updateMatch(thisMatch, context);
+    }
     public ArrayList<Match> getList(String CURRENT_USER_SPORTS, Context context) {
         return _MatchStorage.get_MatchList(CURRENT_USER_SPORTS, context);
     }
@@ -72,5 +75,6 @@ public class MatchController {
     public void localMatchListReset(Context context) {
         _MatchStorage.localMatchListReset(context);
     }
+
 
 }

@@ -7,9 +7,12 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.fragment.DistanceFragment;
 import com.example.kim.pickup.fragment.PopularFragment;
 import com.example.kim.pickup.fragment.TimeFragment;
@@ -19,6 +22,7 @@ public class MatchRoomActivity extends AppCompatActivity {
 
     //TODO: Join match click --> match.popularity++
     String actionBarTitle = "";
+    Button joinButton;
     private Match thisMatch;
 
     @Override
@@ -47,7 +51,15 @@ public class MatchRoomActivity extends AppCompatActivity {
         matchLocation.setText(thisMatch.getLocationName());
 
         TextView player_popularityDetail = (TextView) findViewById(R.id.player_detail_text);
-        player_popularityDetail.setText(thisMatch.getPopularity() + "/" + thisMatch.getTotalCapacity() + " Joined");
+        player_popularityDetail.setText(thisMatch.getUsersCount() + "/" + thisMatch.getTotalCapacity() + " Joined");
+
+        joinButton = (Button) findViewById(R.id.join_game_button);
+        joinButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
@@ -65,7 +77,9 @@ public class MatchRoomActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_like_match) {
+            thisMatch.setPopularity(thisMatch.getPopularity() + 1);
+            MatchController.getInstance().updateMatch(thisMatch, getBaseContext());
             return true;
         }
 

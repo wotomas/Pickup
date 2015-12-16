@@ -1,6 +1,7 @@
 package com.example.kim.pickup.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.unit.Match;
+import com.parse.ParseGeoPoint;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -72,13 +76,19 @@ public class CustomDistanceFragmentAdapter extends BaseAdapter {
         roomName.setText(_matchList.get(position).get_matchName());
 
         TextView priorityOne = (TextView) convertView.findViewById(R.id.priorityOneText);//distance
-        priorityOne.setText(String.valueOf(_matchList.get(position).get_location())+"km");
+        ParseGeoPoint matchLocation = new ParseGeoPoint();
+        matchLocation = _matchList.get(position).get_location();
+
+        ParseGeoPoint myLocation = new ParseGeoPoint(MainActivity.currentX, MainActivity.currentY);
+        Log.d("GeoPoints", myLocation.getLatitude() + " " + myLocation.getLongitude());
+        DecimalFormat decim = new DecimalFormat("#.###");
+        priorityOne.setText(String.valueOf(Double.parseDouble(decim.format(matchLocation.distanceInKilometersTo(myLocation))))+"km");
 
         TextView priorityTwo = (TextView) convertView.findViewById(R.id.priorityTwoText);//time
         priorityTwo.setText(remainingText);
 
         TextView priorityThree = (TextView) convertView.findViewById(R.id.priorityThreeText);//popularity
-        priorityThree.setText(String.valueOf(_matchList.get(position).getPopularity()) + "/" + String.valueOf(_matchList.get(position).getTotalCapacity()));
+        priorityThree.setText(String.valueOf(_matchList.get(position).getPopularity() + " " + _matchList.get(position).getUsersCount()) + "/" + String.valueOf(_matchList.get(position).getTotalCapacity()));
 
         ImageView userImage = (ImageView) convertView.findViewById(R.id.rmProfileImage);
         userImage.setImageResource(R.drawable.temp_profile);

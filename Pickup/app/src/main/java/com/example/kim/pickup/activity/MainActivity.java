@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.kim.pickup.R;
 import com.example.kim.pickup.adapter.NavigationDrawerListAdapter;
@@ -27,6 +28,7 @@ import com.example.kim.pickup.controller.MatchController;
 import com.example.kim.pickup.fragment.FriendsFragment;
 import com.example.kim.pickup.fragment.MessageFragment;
 import com.example.kim.pickup.fragment.ProfileFragment;
+import com.example.kim.pickup.service.GPSTracker;
 import com.example.kim.pickup.storage.MatchStorage;
 import com.example.kim.pickup.unit.NavigationDrawerItem;
 import com.parse.ParseAnalytics;
@@ -34,9 +36,12 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener{
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
     public static String CURRENT_USER;
     public static String CURRENT_USER_SPORTS;
+    public static double currentX = 0;
+    public static double currentY = 0;
+
     private static final String TAG = MainActivity.class.getSimpleName();
     static final int CREATE_MATCH_REQUEST = 0;
 
@@ -82,12 +87,23 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             handler.postDelayed(this, 5000);
         }
     };
-
+    private GPSTracker gps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         MatchController.getInstance().initMatchStorage(new MatchStorage(), this);
+
+        gps = new GPSTracker(this);
+        if(gps.canGetLocation()) {
+            currentX = gps.getLatitude();
+            currentY = gps.getLongitude();
+            Log.d("GeoPoints", "Location set at main Activity to : " + currentX + " " + currentY);
+            Toast.makeText(getApplicationContext(), "Location is set to " + currentX + " " + currentY, Toast.LENGTH_LONG);
+        } else {
+            //can't get locatoin
+            gps.showSettingsAlert();
+        }
         //MatchController.getInstance().localMatchListReset(this);
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -143,7 +159,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (currentUser == null) {
             navigateToLogin();
         }
-        else if( currentUser.get("sport").equals("none") ) {
+        else if(currentUser.get("sport").equals("none") ) {
             //if user exists, but did not select any sports
             //move to select choose activity
             CURRENT_USER = currentUser.getUsername();
@@ -180,7 +196,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             @Override
             public void onPageSelected(int position) {
                 actionBar.setSelectedNavigationItem(position);
-
             }
         });
 
@@ -195,11 +210,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
+
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mSportName = CURRENT_USER_SPORTS;
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            navigateToLogin();
+        }
+        else if(currentUser.get("sport").equals("none") ) {
+            //if user exists, but did not select any sports
+            //move to select choose activity
+            CURRENT_USER = currentUser.getUsername();
+            Intent intent = new Intent(MainActivity.this, SportSelectionActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else {
+            CURRENT_USER = currentUser.getUsername();
+            CURRENT_USER_SPORTS = currentUser.get("sport").toString();
+            Log.i(TAG, currentUser.getUsername() + " " + currentUser.get("sport"));
+        }
         handler.postDelayed(runnable, 5000);
     }
 
@@ -243,8 +278,19 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             case R.id.action_logout:
                 //noinspection SimplifiableIfStatement
                 ParseUser.logOut();
+                MainActivity.CURRENT_USER = "";
                 navigateToLogin();
                 return true;
+            case R.id.action_updateLocation:
+                if(gps.canGetLocation()) {
+                    currentX = gps.getLatitude();
+                    currentY = gps.getLongitude();
+                    Log.d("GeoPoints", "Location set at main Activity to : " + currentX + " " + currentY);
+                    Toast.makeText(getApplicationContext(), "Location is set to " + currentX + " " + currentY, Toast.LENGTH_LONG);
+                } else {
+                    //can't get locatoin
+                    gps.showSettingsAlert();
+                }
         }
 
         return super.onOptionsItemSelected(item);

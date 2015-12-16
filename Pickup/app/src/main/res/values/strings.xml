@@ -2,7 +2,9 @@
 <resources>
     <string name="app_name">Pickup</string>
     <string name="action_logout">Logout</string>
+    <string name="action_updateLocation">Update Location</string>
     <string name="title_activity_create_account">Sign Up</string>
+    <string name="action_like_match">Like Match</string>
     <string name="passwordLengthError">"Password not long enough"</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_section1">Closest</string>
