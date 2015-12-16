@@ -2,7 +2,11 @@ package com.example.kim.pickup.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +115,17 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+
+
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Set title
+        ActionBar actionBar = ((ActionBarActivity)getActivity()).getSupportActionBar();
+        actionBar.setTitle("My Profile");
     }
 
     @Override

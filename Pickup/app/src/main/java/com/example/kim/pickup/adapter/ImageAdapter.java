@@ -1,19 +1,37 @@
 package com.example.kim.pickup.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.activity.MainActivity;
 
 /**
  * Created by nylee on 16/12/15.
  */
 public class ImageAdapter extends BaseAdapter {
     private Context mContext;
+    String [] result;
+    private static LayoutInflater inflater=null;
+    private Integer[] mThumbIds;
+
+
+    public ImageAdapter(Context context, String[] prgmNameList, Integer[] prgmImages) {
+        // TODO Auto-generated constructor stub
+        result=prgmNameList;
+        mContext=context;
+        mThumbIds=prgmImages;
+
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+    }
 
     public ImageAdapter(Context c) {
         mContext = c;
@@ -31,9 +49,37 @@ public class ImageAdapter extends BaseAdapter {
         return 0;
     }
 
+    public class Holder
+    {
+        TextView tv;
+        ImageView img;
+    }
+
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        Holder holder=new Holder();
+        View rowView;
+        final int pos = position;
+
+        rowView = inflater.inflate(R.layout.user_list, null);
+        holder.tv=(TextView) rowView.findViewById(R.id.textView1);
+        holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
+
+        holder.tv.setText(result[position]);
+        holder.img.setImageResource(mThumbIds[position]);
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Link to chat w. them
+                Toast.makeText(mContext, "You Clicked " + result[pos], Toast.LENGTH_LONG).show();
+            }
+        });
+
+        return rowView;
+
+       /* ImageView imageView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
@@ -45,9 +91,12 @@ public class ImageAdapter extends BaseAdapter {
         }
 
         imageView.setImageResource(mThumbIds[position]);
-        return imageView;
-    }
 
+
+
+        return imageView;*/
+    }
+/*
     // references to our images
     private Integer[] mThumbIds = {
             R.drawable.temp_profile, R.drawable.temp_profile2,
@@ -61,6 +110,6 @@ public class ImageAdapter extends BaseAdapter {
             R.drawable.sample_0, R.drawable.sample_1,
             R.drawable.sample_2, R.drawable.sample_3,
             R.drawable.sample_4, R.drawable.sample_5,
-            R.drawable.sample_6, R.drawable.sample_7 */
-    };
+            R.drawable.sample_6, R.drawable.sample_7
+    };*/
 }

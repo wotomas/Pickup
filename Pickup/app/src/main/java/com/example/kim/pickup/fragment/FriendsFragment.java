@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.kim.pickup.R;
+import com.example.kim.pickup.activity.MainActivity;
 import com.example.kim.pickup.adapter.ImageAdapter;
 
 public class FriendsFragment extends Fragment {
@@ -64,7 +65,9 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
 
         GridView gridview = (GridView) view.findViewById(R.id.gridview_friend);
-        gridview.setAdapter(new ImageAdapter(getActivity()));
+        //gridview.setAdapter(new ImageAdapter(getActivity()));
+        gridview.setAdapter(new ImageAdapter(container.getContext(), prgmNameList, mThumbIds));
+        //ImageAdapter(MainActivity mainActivity, String[] prgmNameList, Integer[] prgmImages, View view)
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -77,6 +80,22 @@ public class FriendsFragment extends Fragment {
         return view;
     }
 
+    private Integer[] mThumbIds = {
+            R.drawable.tom, R.drawable.lizzy,
+            R.drawable.william, R.drawable.lucy};
+/*
+            R.drawable.sample_6, R.drawable.sample_7,
+            R.drawable.sample_0, R.drawable.sample_1,
+            R.drawable.sample_2, R.drawable.sample_3,
+            R.drawable.sample_4, R.drawable.sample_5,
+            R.drawable.sample_6, R.drawable.sample_7,
+            R.drawable.sample_0, R.drawable.sample_1,
+            R.drawable.sample_2, R.drawable.sample_3,
+            R.drawable.sample_4, R.drawable.sample_5,
+            R.drawable.sample_6, R.drawable.sample_7 */
+    private String[] prgmNameList = {
+        "Tom","Lizzy","William","Lucy"
+    };
 
     @Override
     public void onAttach(Activity activity) {
