@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kim.pickup.R;
@@ -23,6 +24,7 @@ public class MatchRoomActivity extends AppCompatActivity {
     //TODO: Join match click --> match.popularity++
     String actionBarTitle = "";
     Button joinButton;
+    ImageView courtImageView;
     private Match thisMatch;
 
     @Override
@@ -44,6 +46,7 @@ public class MatchRoomActivity extends AppCompatActivity {
         actionBar.setTitle(actionBarTitle);
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
 
+        ImageView courtImageView = (ImageView) findViewById(R.id.courtImageView);
         TextView selectedSportType = (TextView) findViewById(R.id.sportsType);
         selectedSportType.setText(thisMatch.get_matchName());
 
