@@ -106,7 +106,7 @@ public class MatchStorage implements JsonStorable {
     }
 
 
-    public void updateMatch(Match thisMatch, final Context context) {
+    public void updateMatch(Match thisMatch) {
         final Match newMatch = thisMatch;
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
         query.whereEqualTo("sport", thisMatch.getSportKey()).whereEqualTo("location", thisMatch.get_location()).whereEqualTo("matchName", thisMatch.get_matchName());
@@ -117,6 +117,65 @@ public class MatchStorage implements JsonStorable {
                     Log.d("ParseTest", "Retrieved Object to update count : " + parseObjects.size());
                     for(ParseObject parseObject: parseObjects) {
                         parseObject.put("popularity", newMatch.getPopularity());
+                        parseObject.saveInBackground();
+
+                        if(TimeFragment.mAdapter != null)
+                            TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(DistanceFragment.mAdapter != null)
+                            DistanceFragment.mAdapter.notifyDataSetChanged();
+                        if(PopularFragment.mAdapter != null)
+                            PopularFragment.mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    // something went wrong
+                    Log.d("ParseTest", "Error : " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void removeMatch(Match thisMatch) {
+        final Match newMatch = thisMatch;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
+        query.whereEqualTo("sport", thisMatch.getSportKey()).whereEqualTo("location", thisMatch.get_location()).whereEqualTo("matchName", thisMatch.get_matchName());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e == null) {
+                    Log.d("ParseTest", "Retrieved Object to update count : " + parseObjects.size());
+                    for(ParseObject parseObject: parseObjects) {
+                        parseObject.deleteInBackground();
+
+                        if(TimeFragment.mAdapter != null)
+                            TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(DistanceFragment.mAdapter != null)
+                            DistanceFragment.mAdapter.notifyDataSetChanged();
+                        if(PopularFragment.mAdapter != null)
+                            PopularFragment.mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    // something went wrong
+                    Log.d("ParseTest", "Error : " + e.getMessage());
+                }
+            }
+        });
+    }
+
+    public void withdrawFromMatch(Match thisMatch) {
+        final Match newMatch = thisMatch;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
+        query.whereEqualTo("sport", thisMatch.getSportKey()).whereEqualTo("location", thisMatch.get_location()).whereEqualTo("matchName", thisMatch.get_matchName());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e == null) {
+                    Log.d("ParseTest", "Retrieved Object to update count : " + parseObjects.size());
+                    List<String> userList = new ArrayList<String>();
+                    for(ParseObject parseObject: parseObjects) {
+                        userList = newMatch.getUsers();
+                        userList.remove(MainActivity.CURRENT_USER);
+
+                        parseObject.put("userList", userList);
                         parseObject.saveInBackground();
 
                         if(TimeFragment.mAdapter != null)
@@ -163,8 +222,38 @@ public class MatchStorage implements JsonStorable {
                 }
             });
         }
+    }
 
+    public void joinMatch(Match thisMatch) {
+        final Match newMatch = thisMatch;
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Match");
+        query.whereEqualTo("sport", thisMatch.getSportKey()).whereEqualTo("location", thisMatch.get_location()).whereEqualTo("matchName", thisMatch.get_matchName());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, ParseException e) {
+                if(e == null) {
+                    Log.d("ParseTest", "Retrieved Object to update count : " + parseObjects.size());
+                    List<String> userList = new ArrayList<String>();
+                    for(ParseObject parseObject: parseObjects) {
+                        userList = newMatch.getUsers();
+                        userList.add(MainActivity.CURRENT_USER);
 
+                        parseObject.put("userList", userList);
+                        parseObject.saveInBackground();
+
+                        if(TimeFragment.mAdapter != null)
+                            TimeFragment.mAdapter.notifyDataSetChanged();
+                        if(DistanceFragment.mAdapter != null)
+                            DistanceFragment.mAdapter.notifyDataSetChanged();
+                        if(PopularFragment.mAdapter != null)
+                            PopularFragment.mAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    // something went wrong
+                    Log.d("ParseTest", "Error : " + e.getMessage());
+                }
+            }
+        });
     }
 
     @Override

@@ -70,6 +70,7 @@ public class CustomTimeFragmentAdapter extends BaseAdapter {
             long hour = hours%24;
             remainingText = String.valueOf(day)+"d "+String.valueOf(hour)+"h";
         }
+        Log.d("TimeCheck", "Current Time is: " + remaining);
 
         TextView roomName = (TextView) convertView.findViewById(R.id.rmName);
         roomName.setText(_matchList.get(position).get_matchName());

@@ -146,4 +146,13 @@ public class Match implements Serializable{
     public int getUsersCount() {
         return this.users.size();
     }
+
+    public boolean checkIfUserIsAlreadyJoined(String username) {
+        for(String user: this.users) {
+            if(user.equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

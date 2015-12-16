@@ -47,6 +47,20 @@ public class MatchRoomActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#DE5460")));
 
         ImageView courtImageView = (ImageView) findViewById(R.id.courtImageView);
+        switch(thisMatch.getSportKey()) {
+            case "tennis":
+                courtImageView.setImageResource(R.drawable.tennis_court);
+                break;
+            case "tableTennis":
+                courtImageView.setImageResource(R.drawable.tabletennis_court);
+                break;
+            case "soccer":
+                courtImageView.setImageResource(R.drawable.soccer_court);
+                break;
+            default:
+                break;
+        }
+
         TextView selectedSportType = (TextView) findViewById(R.id.sportsType);
         selectedSportType.setText(thisMatch.get_matchName());
 
@@ -57,12 +71,42 @@ public class MatchRoomActivity extends AppCompatActivity {
         player_popularityDetail.setText(thisMatch.getUsersCount() + "/" + thisMatch.getTotalCapacity() + " Joined");
 
         joinButton = (Button) findViewById(R.id.join_game_button);
-        joinButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+        if(thisMatch.getOwnerID() == MainActivity.CURRENT_USER) {
+            joinButton.setText("Remove Game");
+            joinButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //remove game on click
+                    MatchController.getInstance().removeMatch(thisMatch);
+                    finish();
+                }
+            });
+        } else {
+            if(thisMatch.checkIfUserIsAlreadyJoined(MainActivity.CURRENT_USER)) {
+                // if user is already inside the room
+                // remove him from list, update parse data
+                joinButton.setText("Withdraw");
+                joinButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //withdraw from list
+                        MatchController.getInstance().withdrawFromMatch(thisMatch);
+                        finish();
+                    }
+                });
+            } else {
+                joinButton.setText("Join Game");
+                joinButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        MatchController.getInstance().joinMatch(thisMatch);
+                        finish();
+                    }
+                });
             }
-        });
+
+        }
+
     }
 
     @Override
@@ -82,7 +126,7 @@ public class MatchRoomActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_like_match) {
             thisMatch.setPopularity(thisMatch.getPopularity() + 1);
-            MatchController.getInstance().updateMatch(thisMatch, getBaseContext());
+            MatchController.getInstance().updateMatch(thisMatch);
             return true;
         }
 
